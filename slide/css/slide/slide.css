@@ -1,7 +1,4 @@
 .slide__into {
-  max-width: 300px;
-  height: 300px;
-  border-color: #252525;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

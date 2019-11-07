@@ -4,65 +4,112 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-		<title>Document</title>
-		<link rel="stylesheet" href="css/slide.css" />
+		<title>Slide</title>
+		<link
+			href="https://fonts.googleapis.com/css?family=Noto+Sans:300,400&display=swap"
+			rel="stylesheet"
+		/>
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/slide/slide.css" />
 	</head>
-	<body>
-		<div class="slide slide--alpha">
-			<div id="alpha" class="slide__into">
-				<img
-					id="alpha-0"
-					src="https://cdn2.thecatapi.com/images/5q5.jpg"
-					class="slide__item"
-				/>
-				<img
-					id="alpha-1"
-					src="https://cdn2.thecatapi.com/images/b8.png"
-					class="slide__item"
-				/>
-				<img
-					id="alpha-2"
-					src="https://cdn2.thecatapi.com/images/9qc.jpg"
-					class="slide__item"
-				/>
+	<body class="layout">
+		<header class="layout__header">
+			<div class="layout__main">
+				<div class="group group--header">
+					<div class="group__item">
+						<h1>Slide JS</h1>
+					</div>
+					<div class="group__item">
+						<nav>
+							<a href="#" title="Look up documentation"
+								>Documentation</a
+							>
+						</nav>
+					</div>
+				</div>
 			</div>
-			<hr />
-			<p class="slide__load slide__is-hidden">Looking for kitties...</p>
-			<nav class="slide__thumbnails">
-				<a
-					href="#alpha-0"
-					data-slide-index="0"
-					class="slide__thumbnail"
-				>
-					<img src="https://cdn2.thecatapi.com/images/5q5.jpg" />
-				</a>
-				<a
-					href="#alpha-1"
-					data-slide-index="1"
-					class="slide__thumbnail"
-				>
-					<img src="https://cdn2.thecatapi.com/images/b8.png" />
-				</a>
-				<a
-					href="#alpha-2"
-					data-slide-index="2"
-					class="slide__thumbnail"
-				>
-					<img src="https://cdn2.thecatapi.com/images/9qc.jpg" />
-				</a>
-			</nav>
-			<nav class="slide__js">
-				<button class="slide__prev" type="button">Prev</button>
-				<button class="slide__play" type="button">Play</button>
-				<button class="slide__add" type="button">
-					Give me kitties!
-				</button>
-				<button class="slide__pause" type="button">Pause</button>
-				<button class="slide__next" type="button">Next</button>
-			</nav>
+		</header>
+		<div class="layout__main">
+			<div class="slide slide--alpha">
+				<div class="group group--main group--slide">
+					<div class="group__item">
+						<nav class="slide__js slide__nav">
+							<button class="slide__prev" type="button">
+								Prev
+							</button>
+							<button class="slide__play" type="button">
+								Play
+							</button>
+							<button class="slide__add" type="button">
+								Give me kitties!
+							</button>
+							<button class="slide__pause" type="button">
+								Pause
+							</button>
+							<button class="slide__next" type="button">
+								Next
+							</button>
+						</nav>
+						<div id="alpha" class="slide__into">
+							<img
+								id="alpha-0"
+								src="https://cdn2.thecatapi.com/images/5q5.jpg"
+								class="slide__item"
+							/>
+							<img
+								id="alpha-1"
+								src="https://cdn2.thecatapi.com/images/b8.png"
+								class="slide__item"
+							/>
+							<img
+								id="alpha-2"
+								src="https://cdn2.thecatapi.com/images/9qc.jpg"
+								class="slide__item"
+							/>
+						</div>
+					</div>
+					<div class="group__item">
+						<span class="slide__load slide__is-hidden">
+							<span class="slide__spin"></span>
+						</span>
+						<nav class="slide__thumbnails">
+							<a
+								href="#alpha-0"
+								data-slide-index="0"
+								class="slide__thumbnail"
+							>
+								<img
+									src="https://cdn2.thecatapi.com/images/5q5.jpg"
+								/>
+							</a>
+							<a
+								href="#alpha-1"
+								data-slide-index="1"
+								class="slide__thumbnail"
+							>
+								<img
+									src="https://cdn2.thecatapi.com/images/b8.png"
+								/>
+							</a>
+							<a
+								href="#alpha-2"
+								data-slide-index="2"
+								class="slide__thumbnail"
+							>
+								<img
+									src="https://cdn2.thecatapi.com/images/9qc.jpg"
+								/>
+							</a>
+						</nav>
+					</div>
+				</div>
+			</div>
 		</div>
 
-		<link rel="stylesheet" href="css/slide.thumbnails.css" />
+		<link
+			rel="stylesheet"
+			href="css/slide/extensions/slide.thumbnails.css"
+		/>
 		<noscript>
 			<style>
 				/* when javascript is not supported */
@@ -85,10 +132,10 @@
 				}
 			</style>
 		</noscript>
-		<script src="js/slide.js"></script>
-		<script src="js/slide.ui.js"></script>
-		<script src="js/slide.thumbnails.js"></script>
-		<script src="js/slide.kitties.js"></script>
+		<script src="js/slide/slide.js"></script>
+		<script src="js/slide/extensions/slide.ui.js"></script>
+		<script src="js/slide/extensions/slide.thumbnails.js"></script>
+		<script src="js/slide/extensions/slide.kitties.js"></script>
 		<script src="js/gallery.js"></script>
 	</body>
 </html>
