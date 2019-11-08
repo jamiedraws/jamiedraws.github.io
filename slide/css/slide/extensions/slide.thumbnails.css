@@ -67,7 +67,7 @@
   z-index: 1;
 }
 
-.slide__thumbnail:hover::before, .slide__thumbnail:focus::before {
+.slide__thumbnail:hover::before, .slide__thumbnail:focus::before, .slide__thumbnail--is-selected::before {
   opacity: 1;
 }
 /*# sourceMappingURL=slide.thumbnails.css.map */
