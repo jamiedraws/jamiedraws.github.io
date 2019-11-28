@@ -1,9 +1,8 @@
 (function(global) {
 	const slide = function() {
-		const delay = {
-			name: "--slide-delay",
-			shim: "animation-iteration-count",
-			time: 1000
+		const rules = {
+			delay: 5000,
+			noScroll: "slide__into--no-scroll"
 		};
 		const team = [];
 		const request = function(id) {
@@ -13,6 +12,35 @@
 		const manager = Object.defineProperties(
 			{},
 			{
+				create: {
+					value: function(api, id, parent, config) {
+						const self = Object.create(api);
+
+						Object.defineProperties(self, {
+							name: {
+								set: function(parent) {
+									this.parent = parent;
+								},
+								get: function() {
+									return this.parent.id;
+								}
+							},
+							id: {
+								value: id
+							}
+						});
+
+						self.name = parent;
+
+						if (typeof config === "object") {
+							for (var option in config) {
+								self[option] = config[option];
+							}
+						}
+
+						return self;
+					}
+				},
 				assign: {
 					value: function() {
 						const self = Object.create(this);
@@ -21,9 +49,18 @@
 						self.shim = false;
 						self.auto = false;
 						self.timer = undefined;
-						self.delay = delay.time;
+						self.delay = rules.delay;
 
 						return self;
+					}
+				},
+				setScroll: {
+					value: function(scroll) {
+						if (scroll) {
+							this.parent.classList.add(rules.noScroll);
+						} else {
+							this.parent.classList.remove(rules.noScroll);
+						}
 					}
 				},
 				setIndex: {
@@ -48,36 +85,15 @@
 				},
 				setRotation: {
 					value: function() {
-						const parent = this.parent;
-						const pos = this.position;
-
-						if (!this.shim) {
-							parent.style.setProperty("--slide-pos", pos + "%");
-						} else {
-							const children = this.children;
-							children.forEach(function(child) {
-								child.style.transform = "translateX(" + pos + "%)";
-							});
-						}
+						const slide = this.children[this.index];
+						slide.scrollIntoView();
 					}
 				},
 				setDelay: {
-					value: function() {
-						const style = getComputedStyle(this.parent);
-						let time = parseInt(style.getPropertyValue(delay.name));
-
-						if (Number.isNaN(time)) {
-							this.shim = true;
-							time = parseInt(style.getPropertyValue(delay.shim));
-						}
-
-						if (Number.isNaN(time)) {
-							time = delay.time;
-							throw "The delay amount is not a number.";
-						}
-
-						if (time < delay.time) {
-							time = delay.time;
+					value: function(time) {
+						const illegal = typeof time !== "number" || time < rules.delay;
+						if (illegal) {
+							time = this.delay;
 						}
 
 						this.delay = time;
@@ -121,49 +137,16 @@
 		const api = Object.defineProperties(
 			{},
 			{
-				create: {
-					value: function(id, parent, config) {
-						if (!("id" in this)) {
-							const self = Object.create(this);
-							Object.defineProperties(self, {
-								name: {
-									set: function(parent) {
-										this.parent = parent;
-									},
-									get: function() {
-										return this.parent.id;
-									}
-								},
-								id: {
-									value: id
-								}
-							});
-
-							self.name = parent;
-							parent.classList.add("slide__into--no-scroll");
-
-							if (typeof config === "object") {
-								for (var option in config) {
-									self[option] = config[option];
-								}
-							}
-
-							return self;
-						} else {
-							throw "The 'api' is already constructed.";
-						}
-					}
-				},
 				parent: {
 					set: function(parent) {
 						if (typeof parent !== "object") {
-							throw "The passed 'parent' must be an element.";
+							throw "E2 :: The passed 'parent' must be an element.";
 						}
 						if (parent === null) {
-							throw "The passed 'parent' could not be found.";
+							throw "E3 :: The passed 'parent' could not be found.";
 						}
 						if (parent.nodeType !== 1) {
-							throw "The passed 'parent' is not an element.";
+							throw "E4 :: The passed 'parent' is not an element.";
 						}
 
 						const worker = request(this.id);
@@ -176,9 +159,9 @@
 					}
 				},
 				children: {
-					set: function(children) {
+					set: function() {
 						const worker = request(this.id);
-						worker.children = children || worker.parent.children;
+						worker.children = worker.parent.children;
 					},
 					get: function() {
 						const worker = request(this.id);
@@ -203,26 +186,27 @@
 					}
 				},
 				getDelay: {
-					value: function() {
+					value: function(time) {
 						const worker = request(this.id);
-						worker.setDelay();
+						worker.setDelay(time);
 						return worker.delay;
 					}
 				},
 				play: {
 					enumerable: true,
-					value: function() {
+					value: function(reverse) {
 						const worker = request(this.id);
-						this.pause();
+						this.pause(true);
 						worker.auto = true;
 						worker.setTask(worker.index + 1);
 					}
 				},
 				pause: {
 					enumerable: true,
-					value: function() {
+					value: function(scroll) {
 						const worker = request(this.id);
 						worker.auto = false;
+						worker.setScroll(scroll);
 						clearTimeout(worker.timer);
 					}
 				},
@@ -230,7 +214,7 @@
 					enumerable: true,
 					value: function() {
 						const worker = request(this.id);
-						this.pause();
+						this.pause(true);
 						worker.setTask(worker.index - 1);
 					}
 				},
@@ -238,7 +222,7 @@
 					enumerable: true,
 					value: function() {
 						const worker = request(this.id);
-						this.pause();
+						this.pause(true);
 						worker.setTask(worker.index + 1);
 					}
 				},
@@ -246,7 +230,7 @@
 					enumerable: true,
 					value: function(index) {
 						if (typeof index !== "number") {
-							throw "The passed 'index' is not a number.";
+							throw "E5 :: The passed 'index' is not a number.";
 						}
 
 						const worker = request(this.id);
@@ -258,35 +242,58 @@
 			}
 		);
 
-		return {
-			into: function(parent, init, app) {
-				const worker = manager.assign();
-				let task, options;
-				team.push(worker);
+		const interface = Object.defineProperties(
+			{},
+			{
+				into: {
+					value: function(parent, init, app) {
+						const worker = manager.assign();
+						let task, options;
+						team.push(worker);
 
-				if (typeof init === "function") {
-					task = init;
+						if (typeof init === "function") {
+							task = init;
+						}
+
+						if (typeof init === "object") {
+							task = app;
+							options = init;
+						} else if (typeof app === "object") {
+							options = app;
+						} else {
+							options = {};
+						}
+
+						const ui = manager.create(api, team.length - 1, parent, options);
+						return task.call(ui);
+					}
+				},
+				proto: {
+					value: function(parameters) {
+						Object.create(api, parameters);
+						Object.keys(parameters).forEach(function(parameter) {
+							Object.defineProperty(api, parameter, {
+								writable: false,
+								configurable: false,
+								enumerable: true,
+								value: parameters[parameter]
+							});
+						});
+					}
 				}
+			}
+		);
 
-				if (typeof init === "object") {
-					task = app;
-					options = init;
-				} else if (typeof app === "object") {
-					options = app;
-				} else {
-					options = {};
-				}
-
-				const ui = api.create(team.length - 1, parent, options);
-				return task.call(ui);
-			},
-			proto: api
-		};
+		return interface;
 	};
 
 	if (typeof global.Slide !== "object") {
-		global.Slide = slide();
+		Object.defineProperty(global, "Slide", {
+			value: slide(),
+			writable: false,
+			configurable: false
+		});
 	} else {
-		throw "The 'Slide' feature has already been evaluated.";
+		throw "E1 :: The 'Slide' feature has already been evaluated.";
 	}
 })(window);
