@@ -91,6 +91,14 @@ a {
 		@include viewport-lg {
 			height: 450px;
 		}
+
+		#{$this}__item {
+			height: auto;
+		}
+	}
+
+	& &__into {
+		align-items: stretch;
 	}
 
 	&__load {
@@ -139,25 +147,26 @@ a {
 
 	&__nav {
 		display: flex;
+		flex-wrap: wrap;
 	}
-}
 
-button {
-	display: inline-flex;
-	padding: 1em;
-	background: transparent;
-	color: #ededed;
-	border: 0.15em solid #ededed;
-	font-size: 0.9rem;
-	transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
-	flex: 1;
-	justify-content: center;
-	align-items: center;
-	margin: 0.25rem;
+	button {
+		display: inline-flex;
+		padding: 1em;
+		background: transparent;
+		color: #ededed;
+		border: 0.15em solid #ededed;
+		font-size: 0.9rem;
+		transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
+		flex: 1 1 100px;
+		justify-content: center;
+		align-items: center;
+		margin: 0.25rem;
 
-	&:hover,
-	&:focus {
-		background: #ededed;
-		color: #252525;
+		&:hover,
+		&:focus {
+			background: #ededed;
+			color: #252525;
+		}
 	}
 }

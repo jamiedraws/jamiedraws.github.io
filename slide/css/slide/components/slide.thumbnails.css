@@ -1,28 +1,15 @@
 .slide__thumbnails {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-}
-
-.slide__thumbnails--disable .slide__thumbnail {
-  pointer-events: none;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  font-size: 0.9rem;
 }
 
 .slide__thumbnails--scroll {
+  flex-wrap: nowrap;
   overflow-x: auto;
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
-  -ms-flex-wrap: nowrap;
-      flex-wrap: nowrap;
-  -ms-overflow-style: -ms-autohiding-scrollbar;
-}
-
-.slide__thumbnails--scroll::-webkit-scrollbar {
   width: 0.25em;
   height: 0.25em;
   background: #d7d7d7;
@@ -33,38 +20,36 @@
 }
 
 .slide__thumbnails--scroll > .slide__thumbnail {
-  -ms-flex-negative: 0;
-      flex-shrink: 0;
+  flex-shrink: 0;
 }
 
 .slide__thumbnail {
-  /* can set the flex basis to customize the grid */
-  -webkit-box-flex: 1;
-      -ms-flex: 1 1 20%;
-          flex: 1 1 20%;
-  display: inline-block;
+  flex: 1 1 20%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   border: 0.05rem solid;
   background: transparent;
   border-color: inherit;
-  color: inherit;
   margin: 0.25rem;
   height: 5em;
   padding: 0;
+  color: inherit;
+  text-decoration: none;
   position: relative;
 }
 
 .slide__thumbnail::before {
-  background: rgba(0, 0, 0, 0.2);
   content: "";
   position: absolute;
+  z-index: 1;
   top: 0;
   left: 0;
   opacity: 0;
   right: 0;
   bottom: 0;
-  -webkit-transition: opacity 0.3s ease-out;
+  background: rgba(0, 0, 0, 0.2);
   transition: opacity 0.3s ease-out;
-  z-index: 1;
 }
 
 .slide__thumbnail:hover::before, .slide__thumbnail:focus::before, .slide__thumbnail--is-selected::before {

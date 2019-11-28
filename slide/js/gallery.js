@@ -13,27 +13,27 @@ const carousel = Slide.into(
 	function() {
 		const self = this;
 
-		self.onClick(self.prevButton, function() {
+		self.prevButton.addEventListener("click", function() {
 			self.prev();
 		});
 
-		self.onClick(self.nextButton, function() {
+		self.nextButton.addEventListener("click", function() {
 			self.next();
 		});
 
-		self.onClick(self.playButton, function() {
+		self.playButton.addEventListener("click", function() {
 			self.play();
 		});
 
-		self.onClick(self.pauseButton, function() {
+		self.pauseButton.addEventListener("click", function() {
 			self.pause();
 		});
 
-		self.onClick(self.addButton, function() {
+		self.addButton.addEventListener("click", function() {
 			self.addKitty();
 		});
 
-		self.onClick(self.thumbnails, function(event) {
+		self.thumbnails.addEventListener("click", function(event) {
 			event.preventDefault();
 			const thumbnail = event.target;
 			const index = parseInt(thumbnail.dataset.slideIndex);

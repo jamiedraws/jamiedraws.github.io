@@ -1,59 +1,29 @@
 .slide__into {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
-  overflow-x: hidden;
-  contain: content;
-  --slide-pos: 0;
-  --slide-delay: 2000;
-  --slide-duration: 250ms;
-  --slide-easing: ease-in-out;
-  -webkit-animation-iteration-count: 2000;
-          animation-iteration-count: 2000;
-  counter-increment: 0;
-  -webkit-overflow-scrolling: touch;
-  -ms-overflow-style: -ms-autohiding-scrollbar;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
   position: relative;
+  display: flex;
+  align-items: flex-start;
+  margin: 0.25rem;
+  border-color: #252525;
+  contain: content;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  overflow-x: scroll;
+  overflow-y: hidden;
 }
 
 .slide__item {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-flex: 1;
-      -ms-flex: 1 0 100%;
-          flex: 1 0 100%;
-  -webkit-transition-property: -webkit-transform;
-  transition-property: -webkit-transform;
-  transition-property: transform;
-  transition-property: transform, -webkit-transform;
-  -webkit-transform: translateX(0);
-          transform: translateX(0);
-  -webkit-transform: translateX(var(--slide-pos));
-          transform: translateX(var(--slide-pos));
-  -webkit-transition-duration: 250ms;
-          transition-duration: 250ms;
-  -webkit-transition-duration: var(--slide-duration, 250ms);
-          transition-duration: var(--slide-duration, 250ms);
-  -webkit-transition-timing-function: ease-in-out;
-          transition-timing-function: ease-in-out;
-  -webkit-transition-timing-function: var(--slide-easing, ease-in-out);
-          transition-timing-function: var(--slide-easing, ease-in-out);
+  align-items: center;
+  flex: 1 0 100%;
   position: relative;
+  scroll-snap-align: start;
 }
 
 .slide img {
   display: block;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   width: 100%;
   height: 100%;
   max-width: 100%;
@@ -61,5 +31,17 @@
 
 .slide__is-hidden {
   display: none;
+}
+
+.slide--vertical .slide__into {
+  flex-direction: column;
+  overscroll-behavior-y: contain;
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.slide .slide__into--no-scroll {
+  overflow: hidden;
 }
 /*# sourceMappingURL=slide.css.map */
