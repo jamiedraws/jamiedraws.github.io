@@ -112,20 +112,13 @@ a {
 
 .slide__into {
   margin: 0.25rem;
+  height: 50vh;
 }
 
 @media all and (min-width: 800px) {
   .slide__into {
     height: 450px;
   }
-}
-
-.slide__into .slide__item {
-  height: auto;
-}
-
-.slide .slide__into {
-  align-items: stretch;
 }
 
 .slide__load {
