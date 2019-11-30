@@ -39,16 +39,13 @@ Slide.into(
 		});
 
 		// add observer for each slide rotation
-		self.watch(function(index, finish) {
+		self.watch(function(index) {
 			// display the selected thumbnail button using CSS
 			self.selectThumbnail(index);
 
 			// allow screen reader to annouce current slide
 			self.updateSlideVisibility(index);
 			self.observeLiveRegion();
-
-			// finish the rotation task
-			finish();
 		});
 	}
 );

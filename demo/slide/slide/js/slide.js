@@ -1,17 +1,64 @@
 (function(global) {
-	const slide = function() {
-		const rules = {
-			delay: 5000,
-			noScroll: "slide__into--no-scroll"
-		};
-		const team = [];
-		const request = function(id) {
-			return team[id];
-		};
+	const generate = function(properties, o) {
+		return Object.defineProperties(o || {}, properties);
+	};
 
-		const manager = Object.defineProperties(
-			{},
-			{
+	const slide = generate({
+		rules: {
+			value: generate({
+				delay: {
+					value: 5000
+				},
+				noScroll: {
+					value: "slide__into--no-scroll"
+				}
+			})
+		},
+		team: {
+			value: []
+		},
+		request: {
+			value: function(id) {
+				return this.team[id];
+			}
+		},
+		observer: {
+			value: function(parent, children, cb) {
+				if ("IntersectionObserver" in window) {
+					const io = new IntersectionObserver(
+						function(entries) {
+							entries.forEach(function(entry) {
+								if (entry.intersectionRatio > 0 && entry.isIntersecting) {
+									const items = [].slice.call(children);
+									const index = items.indexOf(entry.target);
+									cb(index);
+								}
+							});
+						},
+						{
+							root: parent,
+							rootMargin: "0px",
+							threshold: 0.9
+						}
+					);
+
+					return function(children) {
+						const length = children.length;
+						for (var i = 0; i < length; i++) {
+							io.observe(children[i]);
+						}
+					};
+				} else {
+					return function() {
+						const noScroll = slide.rules.noScroll;
+						this.shim = true;
+						this.parent.classList.add(noScroll);
+					};
+				}
+			}
+		},
+		manager: {
+			value: generate({
 				create: {
 					value: function(api, id, parent, config) {
 						const self = Object.create(api);
@@ -49,23 +96,24 @@
 						self.shim = false;
 						self.auto = false;
 						self.timer = undefined;
-						self.delay = rules.delay;
+						self.delay = slide.rules.delay;
 
 						return self;
 					}
 				},
-				setScroll: {
-					value: function(scroll) {
-						if (scroll) {
-							this.parent.classList.add(rules.noScroll);
-						} else {
-							this.parent.classList.remove(rules.noScroll);
-						}
+				observer: {
+					value: function(parent, children) {
+						const self = this;
+						return slide.observer(parent, children, function(index) {
+							self.setIndex(index);
+							self.setCallback();
+						});
 					}
 				},
 				setIndex: {
 					value: function(index) {
 						const children = this.children.length;
+
 						if (typeof index === "number") {
 							this.index = index;
 						}
@@ -77,12 +125,6 @@
 						}
 					}
 				},
-				setPosition: {
-					value: function() {
-						const currentIndex = this.index;
-						this.position = -(currentIndex * 100);
-					}
-				},
 				setRotation: {
 					value: function() {
 						const slide = this.children[this.index];
@@ -91,7 +133,8 @@
 				},
 				setDelay: {
 					value: function(time) {
-						const illegal = typeof time !== "number" || time < rules.delay;
+						const illegal =
+							typeof time !== "number" || time < slide.rules.delay;
 						if (illegal) {
 							time = this.delay;
 						}
@@ -100,11 +143,9 @@
 					}
 				},
 				setCallback: {
-					value: function(finish) {
+					value: function() {
 						if (typeof this.handleCallback === "function") {
-							this.handleCallback(this.index, finish);
-						} else {
-							finish();
+							this.handleCallback(this.index);
 						}
 					}
 				},
@@ -117,66 +158,77 @@
 						}
 					}
 				},
+				setShim: {
+					value: function(cb) {
+						if (this.shim) {
+							this.setCallback(cb);
+						} else {
+							cb();
+						}
+					}
+				},
 				setTask: {
 					value: function(index) {
 						const self = this;
+
 						self.setDelay();
 						self.setIndex(index);
-						self.setPosition();
 						self.setRotation();
-						self.setCallback(function() {
+						self.setShim(function() {
 							self.setTimer(function() {
 								self.setTask(self.index + 1);
 							});
 						});
 					}
 				}
-			}
-		);
-
-		const api = Object.defineProperties(
-			{},
-			{
+			})
+		},
+		api: {
+			value: generate({
 				parent: {
 					set: function(parent) {
 						if (typeof parent !== "object") {
-							throw "E2 :: The passed 'parent' must be an element.";
+							throw "ERR-E :: The passed 'parent' must be an element.";
 						}
 						if (parent === null) {
-							throw "E3 :: The passed 'parent' could not be found.";
+							throw "ERR-P :: The passed 'parent' could not be found.";
 						}
 						if (parent.nodeType !== 1) {
-							throw "E4 :: The passed 'parent' is not an element.";
+							throw "ERR-N :: The passed 'parent' is not an element.";
 						}
 
-						const worker = request(this.id);
+						const worker = slide.request(this.id);
+
 						worker.parent = parent;
+						worker.observe = worker.observer(worker.parent, parent.children);
+
 						this.children = parent.children;
 					},
 					get: function() {
-						const worker = request(this.id);
+						const worker = slide.request(this.id);
 						return worker.parent;
 					}
 				},
 				children: {
 					set: function() {
-						const worker = request(this.id);
+						const worker = slide.request(this.id);
 						worker.children = worker.parent.children;
+						worker.observe(worker.children);
 					},
 					get: function() {
-						const worker = request(this.id);
+						const worker = slide.request(this.id);
 						return worker.children;
 					}
 				},
 				isAuto: {
 					value: function() {
-						const worker = request(this.id);
+						const worker = slide.request(this.id);
 						return worker.auto;
 					}
 				},
 				watch: {
 					value: function(task) {
-						const worker = request(this.id);
+						const worker = slide.request(this.id);
 						worker.handleCallback = task.bind(this);
 					}
 				},
@@ -186,43 +238,47 @@
 					}
 				},
 				getDelay: {
-					value: function(time) {
-						const worker = request(this.id);
-						worker.setDelay(time);
+					value: function() {
+						const worker = slide.request(this.id);
 						return worker.delay;
+					}
+				},
+				setDelay: {
+					value: function(delay) {
+						const worker = slide.request(this.id);
+						worker.setDelay(delay);
 					}
 				},
 				play: {
 					enumerable: true,
-					value: function(reverse) {
-						const worker = request(this.id);
-						this.pause(true);
+					value: function() {
+						const worker = slide.request(this.id);
+						this.pause();
 						worker.auto = true;
 						worker.setTask(worker.index + 1);
 					}
 				},
 				pause: {
 					enumerable: true,
-					value: function(scroll) {
-						const worker = request(this.id);
+					value: function() {
+						const worker = slide.request(this.id);
 						worker.auto = false;
-						worker.setScroll(scroll);
 						clearTimeout(worker.timer);
 					}
 				},
 				prev: {
 					enumerable: true,
 					value: function() {
-						const worker = request(this.id);
-						this.pause(true);
+						const worker = slide.request(this.id);
+						this.pause();
 						worker.setTask(worker.index - 1);
 					}
 				},
 				next: {
 					enumerable: true,
 					value: function() {
-						const worker = request(this.id);
-						this.pause(true);
+						const worker = slide.request(this.id);
+						this.pause();
 						worker.setTask(worker.index + 1);
 					}
 				},
@@ -230,26 +286,24 @@
 					enumerable: true,
 					value: function(index) {
 						if (typeof index !== "number") {
-							throw "E5 :: The passed 'index' is not a number.";
+							throw "ERR-X :: The passed 'index' is not a number.";
 						}
 
-						const worker = request(this.id);
+						const worker = slide.request(this.id);
 						this.pause();
 						worker.setIndex(index);
 						worker.setTask();
 					}
 				}
-			}
-		);
-
-		const interface = Object.defineProperties(
-			{},
-			{
+			})
+		},
+		interface: {
+			value: generate({
 				into: {
 					value: function(parent, init, app) {
-						const worker = manager.assign();
+						const worker = slide.manager.assign();
 						let task, options;
-						team.push(worker);
+						slide.team.push(worker);
 
 						if (typeof init === "function") {
 							task = init;
@@ -264,15 +318,21 @@
 							options = {};
 						}
 
-						const ui = manager.create(api, team.length - 1, parent, options);
+						const ui = slide.manager.create(
+							slide.api,
+							slide.team.length - 1,
+							parent,
+							options
+						);
+
 						return task.call(ui);
 					}
 				},
 				proto: {
 					value: function(parameters) {
-						Object.create(api, parameters);
+						Object.create(slide.api, parameters);
 						Object.keys(parameters).forEach(function(parameter) {
-							Object.defineProperty(api, parameter, {
+							Object.defineProperty(slide.api, parameter, {
 								writable: false,
 								configurable: false,
 								enumerable: true,
@@ -281,19 +341,17 @@
 						});
 					}
 				}
-			}
-		);
-
-		return interface;
-	};
+			})
+		}
+	});
 
 	if (typeof global.Slide !== "object") {
 		Object.defineProperty(global, "Slide", {
-			value: slide(),
+			value: slide.interface,
 			writable: false,
 			configurable: false
 		});
 	} else {
-		throw "E1 :: The 'Slide' feature has already been evaluated.";
+		throw "ERR-S :: The 'Slide' feature has already been evaluated.";
 	}
 })(window);

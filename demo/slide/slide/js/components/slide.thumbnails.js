@@ -20,11 +20,12 @@ Slide.proto({
 
 		const thumbnails = this.thumbnails.querySelectorAll("." + name);
 		const thumbnail = this.thumbnails.querySelector(index);
+		const length = thumbnails.length;
 
-		if (thumbnails.length > 0) {
-			thumbnails.forEach(function(thumbnail) {
-				thumbnail.classList.remove(name);
-			});
+		if (length > 0) {
+			for (var i = 0; i < length; i++) {
+				thumbnails[i].classList.remove(name);
+			}
 		}
 		thumbnail.classList.add(name);
 	},

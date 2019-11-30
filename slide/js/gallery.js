@@ -13,6 +13,10 @@ const carousel = Slide.into(
 	function() {
 		const self = this;
 
+		self.setDelay(4999);
+
+		console.log(self.getDelay());
+
 		self.prevButton.addEventListener("click", function() {
 			self.prev();
 		});
@@ -40,9 +44,9 @@ const carousel = Slide.into(
 			self.goto(index);
 		});
 
-		self.watch(function(index, finish) {
+		self.watch(function(index) {
+			console.log("watch", index);
 			self.selectThumbnail(index);
-			finish();
 		});
 
 		return this;
