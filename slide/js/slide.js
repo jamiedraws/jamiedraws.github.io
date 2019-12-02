@@ -4,9 +4,11 @@
     };
 
     const toArray = function(collection) {
-        const store = [];
-        const ar = store.slice.call(collection);
-        return ar;
+        if (collection !== null && typeof collection !== "undefined") {
+            const store = [];
+            const ar = store.slice.call(collection);
+            return ar;
+        }
     };
 
     const slide = generate({
@@ -27,7 +29,7 @@
             value: generate({
                 error: {
                     value:
-                        "https://github.com/jamiedraws/Slide/blob/master/slide/javascript.md#api-errors"
+                        "https://github.com/jamiedraws/Slide/wiki/Slide.js#api-errors"
                 }
             })
         },
@@ -199,7 +201,7 @@
                     }
                 },
                 setCallback: {
-                    value: function() {
+                    value: function(cb) {
                         if (typeof this.handleCallback === "function") {
                             this.handleCallback(this.index);
                         }
@@ -214,13 +216,12 @@
                         }
                     }
                 },
-                setShim: {
+                routeCallback: {
                     value: function(cb) {
                         if (this.shim) {
                             this.setCallback(cb);
-                        } else {
-                            cb();
                         }
+                        cb();
                     }
                 },
                 setTask: {
@@ -230,7 +231,7 @@
                         self.setDelay();
                         self.setIndex(index);
                         self.setRotation();
-                        self.setShim(function() {
+                        self.routeCallback(function() {
                             self.setTimer(function() {
                                 self.setTask(self.index + 1);
                             });
@@ -273,6 +274,9 @@
                         }
                         return true;
                     }
+                },
+                toArray: {
+                    value: toArray
                 },
                 children: {
                     set: function() {
@@ -336,12 +340,9 @@
 
                         const error =
                             slide.errors[code] || slide.defaults.error;
-
-                        throw {
-                            code: code,
-                            error: error,
-                            help: slide.docs.error
-                        };
+                        const help = slide.docs.error;
+                        const message = code + ": " + error + " / " + help;
+                        throw message;
                     }
                 },
                 hasError: {
