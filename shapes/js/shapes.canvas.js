@@ -175,6 +175,6 @@ Shapes(
         colors: ["#4D9DE0", "#E15554", "#E1BC29", "#3BB273", "#7768AE"],
         quantity: 200,
         minRadius: 10,
-        velocity: 5
+        velocity: 2
     }
 );
