@@ -1,48 +1,90 @@
 (function(global) {
     const shapes = function() {
-        let width = global.innerWidth,
-            height = global.innerHeight;
+        /**
+         * Sets canvas stage data for user to work with.
+         */
+        const stage = {
+            x: undefined,
+            y: undefined,
+            width: global.innerWidth,
+            height: global.innerHeight
+        };
 
-        const stage = function(dimension, radius) {
+        /**
+         * Sets the shape's properties.
+         * @param {object} options user options.
+         * @return {object} properties of the shape.
+         */
+        const data = function(options) {
+            const r = Math.random() * 3 + 1;
+            const v = options.setVelocity || 5;
+            return {
+                r: r,
+                x: setCoordinates(stage.width, r),
+                y: setCoordinates(stage.height, r),
+                dx: setVelocity(v),
+                dy: setVelocity(v),
+                color: getColor(options.colors),
+                minRadius: r,
+                maxRadius: maxRadius(options.maxRadius || 40)
+            };
+        };
+
+        /**
+         * Stores references to all shape datasets.
+         */
+        const store = [];
+
+        /**
+         * Adds a dataset for the shape to a store array.
+         * @param {object} data properties of the shape.
+         */
+        const add = function(data) {
+            store.push(data);
+        };
+
+        /**
+         * Sets the coordinate on the canvas.
+         * @param {number} dimension width or height of the canvas.
+         * @param {number} radius radius of the arc.
+         * @return {number} coordinate on the canvas.
+         */
+        const setCoordinates = function(dimension, radius) {
             return Math.random() * (dimension - radius * 2) + radius;
         };
 
-        const velocity = function(factor) {
+        /**
+         * Sets a random velocity number.
+         * @param {number} factor multiplies the velocity value.
+         * @return {number} random velocity number.
+         */
+        const setVelocity = function(factor) {
             return (Math.random() - 0.5) * factor;
         };
 
-        const out = function(axis, radius, dimension) {
+        /**
+         * Determine if the shape is out of the canvas.
+         * @param {number} axis x or y axis of the canvas.
+         * @param {number} radius radius of the arc.
+         * @param {number} dimension width or height of the canvas.
+         * @return {boolean} whether the shape is out of the canvas.
+         */
+        const isOutOfCanvas = function(axis, radius, dimension) {
             return axis + radius > dimension || axis - radius < 0
                 ? true
                 : false;
         };
 
-        const mouse = {
-            x: 0,
-            y: 0
-        };
-
-        global.addEventListener("mousemove", function(event) {
-            mouse.x = event.x;
-            mouse.y = event.y;
-        });
-
-        global.addEventListener("touchmove", function(event) {
-            mouse.x = event.touches[0].pageX;
-            mouse.y = event.touches[0].pageY;
-        });
-
-        global.addEventListener("resize", function() {
-            width = global.innerWidth;
-            height = global.innerHeight;
-        });
-
-        const move = function(data) {
-            if (out(data.x, data.r, width)) {
+        /**
+         * Controls the shape's position on the canvas.
+         * @param {object} data the shape properties.
+         */
+        const moveShape = function(data) {
+            if (isOutOfCanvas(data.x, data.r, stage.width)) {
                 data.dx = -data.dx;
             }
 
-            if (out(data.y, data.r, height)) {
+            if (isOutOfCanvas(data.y, data.r, stage.height)) {
                 data.dy = -data.dy;
             }
 
@@ -50,20 +92,40 @@
             data.y = data.y + data.dy;
         };
 
-        const draw = function(shape, interface) {
-            move(interface);
-            interact(interface);
-            shape(interface);
+        /**
+         * Updates the shape on the canvas.
+         * @param {function} shape drawing of the shape.
+         * @param {object} data properties of the shape.
+         * @param {object} context the canvas context.
+         */
+        const updateShape = function(shape, data, context) {
+            moveShape(data);
+            interact(data);
+            shape(data, context);
         };
 
+        /**
+         * Randomizes a decimal number.
+         * @param {number} x number multiplies by random value.
+         * @return {number} a random decimal number.
+         */
         const getDecimal = function(x) {
             return Math.random() * x;
         };
 
+        /**
+         * Randomizes a whole number.
+         * @param {number} x number rounds down from random value.
+         * @return {number} round down whole number.
+         */
         const getInteger = function(x) {
             return Math.floor(getDecimal(x));
         };
 
+        /**
+         * Randomizes a RGBA color.
+         * @return {string} CSS rgba value.
+         */
         const getRGBA = function() {
             return `rgba(
                 ${getInteger(255)},
@@ -73,6 +135,12 @@
             )`;
         };
 
+        /**
+         * Gets a color value.
+         * @param {string} colors single color value.
+         * @param {object} colors array of string color values.
+         * @return {string} single color value.
+         */
         const getColor = function(colors) {
             if (typeof colors === "string") {
                 return colors;
@@ -83,12 +151,25 @@
             }
         };
 
-        const range = function(axis, mouse) {
-            return mouse - axis < 50 && mouse - axis > -50 ? true : false;
+        /**
+         * Determines if the shape is in proximity of the cursor.
+         * @param {number} axis x or y axis of the canvas.
+         * @param {number} stage x or y coordinate of the stage object.
+         * @return {boolean} whether the shape is in proximity of the cursor.
+         */
+        const isShapeInProximity = function(axis, stage) {
+            return stage - axis < 50 && stage - axis > -50 ? true : false;
         };
 
+        /**
+         * Augments the shape properties on user interaction.
+         * @param {object} data properties of the shape.
+         */
         const interact = function(data) {
-            if (range(data.x, mouse.x) && range(data.y, mouse.y)) {
+            if (
+                isShapeInProximity(data.x, stage.x) &&
+                isShapeInProximity(data.y, stage.y)
+            ) {
                 if (data.r < data.maxRadius) {
                     data.r = data.r + 1;
                 }
@@ -97,84 +178,69 @@
             }
         };
 
+        /**
+         * Sets a min value of the shape's radius.
+         * @param {number} radius radius of the arc.
+         * @return {number} min value of the radius.
+         */
         const minRadius = function(radius) {
             return radius < 2 ? 2 : radius;
         };
 
+        /**
+         * Sets a max value of the shape's radius.
+         * @param {number} radius radius of the arc.
+         * @return {number} max value of the radius.
+         */
         const maxRadius = function(radius) {
             return radius > 40 ? 40 : radius;
         };
 
-        const interface = function(options) {
-            const r = Math.random() * 3 + 1;
-            const v = options.velocity || 5;
-            return {
-                r: r,
-                x: stage(width, r),
-                y: stage(height, r),
-                dx: velocity(v),
-                dy: velocity(v),
-                color: getColor(options.colors),
-                minRadius: r,
-                maxRadius: maxRadius(options.maxRadius || 40)
-            };
-        };
-
-        const animate = function(shape, context) {
-            requestAnimationFrame(animate.bind(this, shape, context));
-            context.clearRect(0, 0, width, height);
-            interfaces.forEach(function(interface) {
-                draw(shape, interface);
+        /**
+         * Refreshes the shape on canvas on each animation frame.
+         * @param {function} shape drawing of the shape.
+         * @param {object} context the canvas.
+         */
+        const animateShape = function(shape, context) {
+            requestAnimationFrame(animateShape.bind(this, shape, context));
+            context.clearRect(0, 0, stage.width, stage.height);
+            store.forEach(function(data) {
+                updateShape(shape, data, context);
             });
         };
 
-        const interfaces = [];
-
-        const store = function(interface) {
-            interfaces.push(interface);
-        };
-
-        const cycle = function(options, cb) {
+        /**
+         * Iterates over a set quantity and performs a task.
+         * @param {object} options user options.
+         * @param {function} callback callback function.
+         */
+        const cycle = function(options, callback) {
             const o = options || {};
             const q = o.quantity || 1;
             for (let i = 0; i < q; i++) {
-                cb(interface(o));
+                callback(data(o));
             }
         };
 
-        return function(canvas, shape, options) {
+        /**
+         * Initializes the shape animation on the canvas.
+         * @param {object} canvas the canvas.
+         * @param {function} shape drawing of the shape.
+         * @param {object} options user options.
+         */
+        const init = function(canvas, shape, options) {
             const context = canvas.getContext("2d");
-            cycle(options, store);
-            animate(shape, context);
+
+            cycle(options, add);
+            animateShape(shape, context);
+
+            return function(init) {
+                init(canvas, stage);
+            };
         };
+
+        return init;
     };
 
     global.Shapes = shapes();
 })(window);
-
-const canvas = document.querySelector("canvas");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-const c = canvas.getContext("2d");
-
-window.addEventListener("resize", function() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-});
-
-Shapes(
-    canvas,
-    function(shape) {
-        c.beginPath();
-        c.arc(shape.x, shape.y, shape.r, 0, Math.PI * 2, false);
-        c.fillStyle = shape.color;
-        c.fill();
-    },
-    {
-        colors: ["#4D9DE0", "#E15554", "#E1BC29", "#3BB273", "#7768AE"],
-        quantity: 200,
-        minRadius: 10,
-        velocity: 2
-    }
-);
