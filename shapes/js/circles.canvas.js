@@ -7,10 +7,9 @@ Shapes(
         c.fill();
     },
     {
-        colors: ["#4D9DE0", "#E15554", "#E1BC29", "#3BB273", "#7768AE"],
-        quantity: 200,
+        quantity: 400,
         minRadius: 10,
-        setVelocity: 2
+        setVelocity: 3
     }
 )(function(canvas, stage) {
     canvas.width = window.innerWidth;
