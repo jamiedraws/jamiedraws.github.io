@@ -1,0 +1,21 @@
+{
+    "short_name": "Shapes",
+    "name": "Shapes",
+    "icons": [
+        {
+            "src": "images/shapes-icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "images/shapes-icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "start_url": "/",
+    "background_color": "#fff",
+    "theme_color": "#464656",
+    "display": "standalone",
+    "orientation": "portrait"
+}
