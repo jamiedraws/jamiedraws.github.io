@@ -174,7 +174,7 @@
                     data.r = data.r + 1;
                 }
             } else if (data.r > data.minRadius) {
-                //data.r = data.r - 1;
+                data.r = data.r - 1;
             }
         };
 
