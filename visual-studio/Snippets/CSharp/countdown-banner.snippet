@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>Countdown Banner</Title>
+      <Shortcut>countdownbanner</Shortcut>
+      <Description>Ability to offer context to the countdown banner such as a title, a callout, the type of countdown and a theme namespace for styling</Description>
+      <Author>Digital Target Marketing</Author>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Code Language="csharp">
+        <![CDATA[
+        public string Title { get; set; }
+        public string Callout { get; set; }
+        public string Theme { get; set; }
+        public Countdown Countdown { get; set; }
+
+        public CountdownBanner()
+        {
+            Title = string.Empty;
+            Callout = string.Empty;
+            Theme = string.Empty;
+        }
+        ]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

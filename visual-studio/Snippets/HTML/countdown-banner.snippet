@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>Countdown Banner</Title>
+      <Shortcut>countdownbanner</Shortcut>
+      <Description>Configures the date and renders the countdown HTML if the date hasn't already elapsed</Description>
+      <Author>Digital Target Marketing</Author>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal>
+          <ID>campaignCode</ID>
+          <ToolTip>Represents the current campaign code</ToolTip>
+          <Default>CampaignCode</Default>
+        </Literal>
+        <Literal>
+          <ID>year</ID>
+          <ToolTip>Represents the countdown year</ToolTip>
+          <Default>2022</Default>
+        </Literal>
+        <Literal>
+          <ID>month</ID>
+          <ToolTip>Represents the countdown month</ToolTip>
+          <Default>12</Default>
+        </Literal>
+        <Literal>
+          <ID>day</ID>
+          <ToolTip>Represents the countdown day</ToolTip>
+          <Default>25</Default>
+        </Literal>
+        <Literal>
+          <ID>title</ID>
+          <ToolTip>Represents the title of the countdown banner</ToolTip>
+          <Default>Title</Default>
+        </Literal>
+        <Literal>
+          <ID>callout</ID>
+          <ToolTip>Represents the callout adveritising of the countdown banner</ToolTip>
+          <Default>Callout</Default>
+        </Literal>
+        <Literal>
+          <ID>theme</ID>
+          <ToolTip>Represents the CSS class name modifier to theme the countdown banner styling</ToolTip>
+          <Default>base</Default>
+        </Literal>
+      </Declarations>
+      <Code Language="asp">
+        <![CDATA[
+        <%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl" %>
+        <%@ Import Namespace="$campaignCode$.Models" %>
+        <%
+        Func<CountdownBanner, string> renderCountdownBanner = ((countdownBanner) =>
+        {
+            var countdownBannerHTML = @"
+            <div class=""banner banner--countdown {{Theme}} countdown"" data-time=""{{Duration}}"">
+                <span class=""banner__header"">
+                    <span class=""banner__title"">{{Title}}</span> 
+                    <span class=""banner__callout"">{{Callout}}</span>
+                </span> 
+                <span class=""banner__desc countdown__group"" aria-live=""polite"" aria-atomic=""true"">
+                    <span data-days=""{{Days}}"" data-time-name=""Day""></span>
+                    <span data-hours=""{{Hours}}"" data-time-name=""Hour""></span>
+                    <span data-minutes=""{{Minutes}}"" data-time-name=""Minute""></span>
+                    <span data-seconds=""{{Seconds}}"" data-time-name=""Second""></span>
+                </span>
+            </div>
+            ";
+
+            var countdown = countdownBanner.Countdown;
+
+            countdownBannerHTML = countdownBannerHTML
+                .Replace("{{Duration}}", countdown.Duration.ToString())
+                .Replace("{{Days}}", countdown.Days.ToString())
+                .Replace("{{Hours}}", countdown.Hours.ToString())
+                .Replace("{{Minutes}}", countdown.Minutes.ToString())
+                .Replace("{{Seconds}}", countdown.Seconds.ToString())
+                .Replace("{{Theme}}", string.Format("banner--{0}", countdownBanner.Theme))
+                .Replace("{{Title}}", countdownBanner.Title)
+                .Replace("{{Callout}}", countdownBanner.Callout);
+
+            return countdown.IsExpired() ? string.Empty : countdownBannerHTML;
+        });        
+        
+        var countdown = new Countdown(new DateTime($year$, $month$, $day$));
+
+        Response.Write(renderCountdownBanner(new CountdownBanner
+        {
+            Title = "$title$",
+            Callout = "$callout$",
+            Theme = "$theme$",
+            Countdown = countdown
+        }));$end$
+        %>
+        ]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>
