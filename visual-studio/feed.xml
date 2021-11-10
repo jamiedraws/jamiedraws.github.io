@@ -15,7 +15,7 @@
     <author>
       <name>Jamie Guijarro</name>
     </author>
-    <content type="application/octet-stream" src="C:\Users\jguijarro\source\repos\DTMSnippets\DTMSnippets\bin\Debug\DTMSnippets.vsix" />
+    <content type="application/octet-stream" src="DTMSnippets.vsix" />
 <Vsix xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/developer/vsx-syndication-schema/2010">
 <Id>78c42058-15e1-43f0-8253-1d71fc9da2fe</Id><Version>1.1</Version><References />
 <Rating xsi:nil="true" />
