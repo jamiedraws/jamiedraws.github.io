@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>VSIX Gallery</title>
+  <id>5a7c2525-ddd8-4c44-b2e3-f57ba01a0d81</id>
+  <updated>2021-11-10T19:50:14Z</updated>
+  <subtitle>Add this feed to Visual Studio's extension manager from Tools -&gt; Options -&gt; Environment -&gt; Extensions and Updates</subtitle>
+  <link rel="alternate" href="feed.xml" />
+  <entry>
+    <id>78c42058-15e1-43f0-8253-1d71fc9da2fe</id>
+    <title type="text">DTM Snippets</title>
+    <link rel="alternate" href="DTMSnippets.vsix" />
+    <summary type="text">Empty VSIX Project.</summary>
+    <published>2021-11-10T19:50:14Z</published>
+    <updated>2021-11-10T19:50:14Z</updated>
+    <author>
+      <name>Jamie Guijarro</name>
+    </author>
+    <content type="application/octet-stream" src="DTMSnippets.vsix" />
+<Vsix xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/developer/vsx-syndication-schema/2010">
+<Id>78c42058-15e1-43f0-8253-1d71fc9da2fe</Id><Version>1.0</Version><References />
+<Rating xsi:nil="true" />
+<RatingCount xsi:nil="true" />
+<DownloadCount xsi:nil="true" />
+</Vsix></entry>
+</feed>
