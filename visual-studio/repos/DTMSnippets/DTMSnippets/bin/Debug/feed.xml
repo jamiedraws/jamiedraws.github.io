@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>VSIX Gallery</title>
   <id>5a7c2525-ddd8-4c44-b2e3-f57ba01a0d81</id>
-  <updated>2021-11-11T00:36:13Z</updated>
+  <updated>2021-11-11T03:04:56Z</updated>
   <subtitle>Add this feed to Visual Studio's extension manager from Tools -&gt; Options -&gt; Environment -&gt; Extensions and Updates</subtitle>
   <link rel="alternate" href="feed.xml" />
   <entry>
@@ -10,8 +10,8 @@
     <title type="text">DTM Snippets</title>
     <link rel="alternate" href="DTMSnippets.vsix" />
     <summary type="text">Ability to generate code snippets in CSharp and HTML</summary>
-    <published>2021-11-11T00:36:13Z</published>
-    <updated>2021-11-11T00:36:13Z</updated>
+    <published>2021-11-11T03:04:56Z</published>
+    <updated>2021-11-11T03:04:56Z</updated>
     <author>
       <name>Jamie Wayne Guijarro</name>
     </author>
