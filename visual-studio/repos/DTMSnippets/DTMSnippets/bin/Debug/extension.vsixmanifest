@@ -1,0 +1,25 @@
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011">
+  <Metadata>
+    <Identity Id="78c42058-15e1-43f0-8253-1d71fc9da2fe" Version="1.0.0" Language="en-US" Publisher="Jamie Wayne Guijarro" />
+    <DisplayName>DTM Snippets</DisplayName>
+    <Description xml:space="preserve">Ability to generate code snippets in CSharp and HTML</Description>
+    <MoreInfo>https://github.com/jamiedraws/jamiedraws.github.io</MoreInfo>
+    <ReleaseNotes>Initial test</ReleaseNotes>
+    <Icon>dtm-swat-icon.png</Icon>
+    <PreviewImage>DTM SWAT.png</PreviewImage>
+  </Metadata>
+  <Installation>
+    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[16.0, 18.0)">
+      <ProductArchitecture>amd64</ProductArchitecture>
+    </InstallationTarget>
+  </Installation>
+  <Dependencies>
+    <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" Version="[4.5,)" />
+  </Dependencies>
+  <Assets>
+    <Asset Type="Microsoft.VisualStudio.VsPackage" Path="Snippets\Snippets.pkgdef" />
+  </Assets>
+  <Prerequisites>
+    <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[17.0,18.0)" DisplayName="Visual Studio core editor" />
+  </Prerequisites>
+</PackageManifest>

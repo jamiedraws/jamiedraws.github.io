@@ -1,0 +1,66 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\jguijarro\\Documents\\Github\\jamiedraws.github.io\\visual-studio\\repos\\DTMSnippets\\DTMSnippets\\DTMSnippets.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\jguijarro\\Documents\\Github\\jamiedraws.github.io\\visual-studio\\repos\\DTMSnippets\\DTMSnippets\\DTMSnippets.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\jguijarro\\Documents\\Github\\jamiedraws.github.io\\visual-studio\\repos\\DTMSnippets\\DTMSnippets\\DTMSnippets.csproj",
+        "projectName": "DTMSnippets",
+        "projectPath": "C:\\Users\\jguijarro\\Documents\\Github\\jamiedraws.github.io\\visual-studio\\repos\\DTMSnippets\\DTMSnippets\\DTMSnippets.csproj",
+        "packagesPath": "C:\\Users\\jguijarro\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\jguijarro\\Documents\\Github\\jamiedraws.github.io\\visual-studio\\repos\\DTMSnippets\\DTMSnippets\\obj\\",
+        "projectStyle": "PackageReference",
+        "skipContentFileWrite": true,
+        "configFilePaths": [
+          "C:\\Users\\jguijarro\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net472"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net472": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net472": {
+          "dependencies": {
+            "Microsoft.VSSDK.BuildTools": {
+              "target": "Package",
+              "version": "[17.0.1619-preview1, )"
+            },
+            "Microsoft.VSSDK.Vsixsigntool": {
+              "target": "Package",
+              "version": "[16.2.29116.78, )"
+            },
+            "Microsoft.VisualStudio.SDK": {
+              "include": "Compile, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "target": "Package",
+              "version": "[17.0.0-previews-1-31325-273, )"
+            }
+          }
+        }
+      },
+      "runtimes": {
+        "win": {
+          "#import": []
+        },
+        "win-x64": {
+          "#import": []
+        },
+        "win-x86": {
+          "#import": []
+        }
+      }
+    }
+  }
+}
