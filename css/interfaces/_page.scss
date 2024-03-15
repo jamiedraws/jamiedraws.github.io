@@ -1,0 +1,68 @@
+// utils
+@use "Shared/scss/templates/base/utils/scope";
+@use "./../utils/contain";
+@use "./../utils/element-controller";
+@use "./../utils/disclosure";
+@use "./../utils/page-break-title";
+
+// components
+@use "./../components/button";
+@use "./../components/list";
+@use "./../components/ui-icon";
+@use "./../components/ui-text-link";
+@use "./../components/ui-logo";
+
+// layouts
+@use "./../layouts/main";
+@use "./../layouts/media-text";
+@use "./../layouts/block-header-text";
+@use "./../layouts/header-text-group";
+@use "./../layouts/cover-image-text";
+@use "./../layouts/accordion";
+@use "./../layouts/slide";
+
+@mixin base {
+    // utils
+
+    // components
+    @include scope.for-template {
+        @include button.base;
+        @include button.circular;
+    }
+
+    @include list.base;
+
+    @content;
+}
+
+@mixin index {
+    // utils
+    @include contain.base;
+    @include element-controller.base;
+    @include disclosure.base;
+    @include page-break-title.base;
+
+    // components
+    @include ui-icon.base;
+    @include ui-text-link.base;
+    @include ui-logo.base;
+
+    // layouts
+    @include main.base;
+    @include media-text.base;
+    @include media-text.block-text;
+    @include media-text.extend-container;
+    @include media-text.reverse-order;
+
+    @include header-text-group.base;
+    @include header-text-group.reverse-order;
+
+    @include block-header-text.base;
+    @include cover-image-text.base;
+
+    @include slide.base;
+    @include slide.responsive;
+    @include accordion.base;
+
+    @content;
+}

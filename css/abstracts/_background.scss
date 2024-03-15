@@ -1,0 +1,17 @@
+// abstracts
+@use "Shared/scss/templates/base/abstracts/background" as _background;
+@forward "Shared/scss/templates/base/abstracts/background";
+
+@mixin color-first-theme {
+    @include _background.color-map(
+        $background-color: var(--color-first),
+        $text-color: white
+    ) {
+        background: var(--color-first-grad);
+
+        position: relative;
+        z-index: 1;
+
+        @content;
+    }
+}

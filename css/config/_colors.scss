@@ -1,0 +1,56 @@
+@mixin scope {
+    // configure main color theme
+    --main-text-color: #2d2e2f;
+    --main-background-color: white;
+
+    @media (prefers-color-scheme: dark) {
+        --main-text-color: #f8f8f8;
+        --main-background-color: #111;
+    }
+
+    // configure color palette theme
+    /*
+    variable naming convention: --color-<ordinal-number>-<letter>
+    ordinal-number: represents a different color hue
+    letter: represents a different shade of the <ordinal-number> color hue
+    */
+
+    --color-first: #2d2e2f;
+    --color-first-a: #151515;
+    --color-first-b: rgb(204, 203, 203);
+
+    --color-second: #f8f8f8;
+    --color-second-a: white;
+    --color-second-b: rgb(204, 203, 203);
+
+    @media (prefers-color-scheme: dark) {
+        --color-first: #f8f8f8;
+        --color-first-a: white;
+        // --color-first-b: #999;
+
+        --color-second: #2d2e2f;
+        --color-second-a: #151515;
+        // --color-second-b: #666;
+    }
+
+    // header color theme
+    // --header-background-color: green;
+    // --header-text-color: white;
+
+    // nav color theme
+    --nav-text-color: var(--main-text-color);
+    --nav-background-color: var(--main-background-color);
+    --nav-link-background-color: var(--main-background-color);
+    --nav-button-close-color: var(--main-text-color);
+    --nav-underlay-color: var(--main-background-color);
+
+    // footer color theme
+    // --footer-background-color: red;
+    // --footer-text-color: black;
+
+    // button color theme
+    --button-background-color: var(--color-third);
+    --button-background-color-rollover: var(--color-third-a);
+    --button-text-color: white;
+    --button-text-color-rollover: white;
+}

@@ -1,0 +1,83 @@
+$select: ".cover-image-text" !default;
+
+// config
+@use "./../config/queries";
+@use "./../config/fonts";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/group";
+@use "Shared/scss/templates/base/abstracts/space";
+@use "Shared/scss/templates/base/abstracts/list";
+
+@mixin base {
+    #{$select} {
+        padding-block: 6rem;
+        container: cover-image-text/inline-size;
+
+        &__image {
+            margin-bottom: 3rem;
+        }
+
+        &__group {
+            @include group.contain-flex($gap: 3rem 2rem) {
+            }
+
+            justify-content: space-between;
+        }
+
+        &__header {
+            flex-basis: 100%;
+        }
+
+        &__links {
+            @include group.contain-flex($gap: 2rem) {
+            }
+
+            justify-content: flex-start;
+        }
+
+        &__header {
+            margin-bottom: -2rem;
+        }
+
+        &__text {
+            flex-basis: 25ch;
+
+            @include space.between-flow-elements($gap: 1rem) {
+            }
+        }
+
+        &__text-desc {
+            flex-basis: 30ch;
+            flex-grow: 1;
+        }
+
+        ul {
+            @include list.structure($offset: 0rem, $gap: 1rem);
+
+            @include list.convert-to-grid($width: 20ch, $gap: 1rem) {
+                column-rule-color: var(--color-first-b);
+            }
+
+            margin-top: 1rem;
+        }
+
+        li {
+            display: flex;
+            flex-direction: column;
+        }
+
+        @container (inline-size < #{queries.rem(1200)}) {
+            &__text-desc {
+                flex-basis: 100%;
+            }
+
+            &__text {
+                // flex-basis: 100%;
+                flex-grow: 1;
+            }
+        }
+
+        @content;
+    }
+}

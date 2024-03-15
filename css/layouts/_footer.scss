@@ -1,0 +1,66 @@
+$select: ".footer" !default;
+
+// config
+@use "./../config/fonts";
+@use "./../config/queries";
+
+// abstracts
+@use "./../abstracts/background";
+@use "Shared/scss/templates/base/abstracts/list";
+@use "Shared/scss/templates/base/abstracts/space";
+
+@mixin base {
+    #{$select} {
+        --section-frame: 1rem;
+
+        overflow: hidden;
+        text-align: center;
+
+        @include background.color-first-theme;
+
+        nav {
+            @include list.structure($offset: 0);
+
+            @media all and (max-width: queries.set(640)) {
+                @include list.convert-to-grid($width: 12em) {
+                    > * {
+                        display: block;
+                        text-align: left;
+                    }
+                }
+            }
+
+            @media all and (min-width: queries.set(640)) {
+                @include list.inline;
+            }
+        }
+
+        a {
+            text-align: left;
+
+            &:not(:hover):not(:focus) {
+                text-decoration: none;
+            }
+        }
+
+        button {
+            font: inherit;
+            color: inherit;
+            text-align: left;
+            word-break: break-word;
+
+            &:not(:hover):not(:focus) {
+                text-decoration: none;
+            }
+        }
+
+        @media all and (max-width: queries.section-container(500)) {
+            address {
+                max-width: 35ch;
+                margin-inline: auto;
+            }
+        }
+
+        @content;
+    }
+}

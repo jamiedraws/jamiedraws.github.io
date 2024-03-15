@@ -1,0 +1,289 @@
+$select: ".media-text" !default;
+
+// config
+@use "./../config/queries";
+@use "./../config/fonts";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/group";
+@use "Shared/scss/templates/base/abstracts/space";
+@use "Shared/scss/templates/base/abstracts/background";
+
+@mixin get-section-container($id: "") {
+    &[aria-labelledby="#{$id}"] {
+        @content;
+    }
+}
+
+@mixin get-section-context($id: "") {
+    @include get-section-container($id) {
+        #{$select} {
+            @content;
+        }
+    }
+}
+
+@mixin base {
+    #{$select} {
+        --section-container: 85rem;
+
+        --media-text-clip-path: polygon(0 0, 100% 7%, 100% 100%, 0 93%);
+        --media-text-picture-background-rotate: -4deg;
+
+        --media-text-background-color: var(--main-text-color);
+        --media-text-color: var(--main-background-color);
+
+        flex-basis: clamp(
+            var(--media-text-min-height, 40rem),
+            var(--media-text-range-height, 50vmax),
+            var(--media-text-max-height, 45rem)
+        );
+        position: relative;
+
+        &::before,
+        &::after {
+            content: "";
+            opacity: 0;
+
+            background: var(--media-text-container-background-color, none);
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+
+            padding-block: var(--media-text-background-padding-block, 0);
+        }
+
+        &::before {
+            margin-top: calc(var(--media-text-background-padding-block) * -1);
+        }
+
+        &::after {
+            margin-bottom: calc(
+                var(--media-text-background-padding-block) * -1
+            );
+        }
+
+        &__container {
+            display: flex;
+            align-items: center;
+
+            container: media-text/inline-size;
+
+            height: 100%;
+
+            clip-path: var(
+                --media-text-clip-path,
+                polygon(0 0, 100% 0, 100% 100%, 0 100%)
+            );
+
+            @include background.color-map(
+                $background-color: var(--media-text-background-color),
+                $text-color: var(--media-text-color)
+            ) {
+            }
+
+            > * {
+                flex: 1;
+            }
+        }
+
+        &__group {
+            @include group.contain-flex($gap: var(--group-gap-xy-axis, 2rem)) {
+            }
+
+            align-items: var(--group-align-items, center);
+            justify-content: var(--group-justify-content, space-between);
+        }
+
+        &__text {
+            flex-basis: 30ch;
+            flex-grow: 1;
+            max-width: 50ch;
+            align-self: flex-start;
+
+            @include space.between-flow-elements(
+                $gap: var(--text-flow-separate-margin)
+            ) {
+            }
+        }
+
+        &__picture {
+            flex-basis: clamp(20em, 50vw, 30em);
+
+            position: relative;
+
+            &::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+
+                opacity: 0.85;
+                background: var(
+                    --media-text-picture-background-color,
+                    var(--media-text-color)
+                );
+                transform: rotate(
+                    var(--media-text-picture-background-rotate, 0)
+                );
+
+                clip-path: var(
+                    --media-text-clip-path,
+                    polygon(0 0, 100% 0, 100% 100%, 0 100%)
+                );
+            }
+
+            > img {
+                clip-path: var(
+                    --media-text-clip-path,
+                    polygon(0 0, 100% 0, 100% 100%, 0 100%)
+                );
+            }
+        }
+
+        @container (inline-size < #{queries.set(900)}) {
+            &__picture {
+                flex-basis: 100%;
+                flex-grow: 1;
+                margin-inline: -2rem;
+                margin-bottom: -1rem;
+                max-width: none;
+                order: 1;
+
+                > img {
+                    width: 100%;
+                }
+            }
+
+            &__text {
+                padding-block: 6rem 1rem;
+                margin-inline: auto;
+            }
+        }
+
+        @include get-section-context("about-title") {
+            &__title {
+                max-width: 14ch;
+            }
+        }
+
+        @include get-section-container("teamwork-title") {
+            --media-text-background-padding-block: 5em;
+        }
+
+        @include get-section-context("teamwork-title") {
+            &__title {
+                max-width: 15ch;
+            }
+        }
+
+        @include get-section-context("mentor-title") {
+            &__title {
+                max-width: 11ch;
+            }
+        }
+
+        @content;
+    }
+}
+
+@mixin extend-container {
+    #{$select} {
+        &--extend-container {
+            --media-text-background-padding-block: 5em;
+            --media-text-container-background-color: var(--color-first-a);
+
+            &::before,
+            &::after {
+                opacity: 1;
+            }
+
+            #{$select} {
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin block-text {
+    #{$select} {
+        &--block-text {
+            --group-justify-content: center;
+
+            --media-text-min-height: 30rem;
+            --media-text-max-height: 30rem;
+
+            --media-text-container-background-color: var(--color-second);
+
+            text-align: center;
+
+            &::before {
+                opacity: 1;
+                clip-path: var(
+                    --media-text-clip-path,
+                    polygon(0 0, 100% 0, 100% 100%, 0 100%)
+                );
+
+                transform: rotateY(0.5turn);
+            }
+
+            #{$select} {
+                &__text {
+                    padding-block: 0;
+                    margin-inline: auto;
+                }
+
+                &__media {
+                    flex-basis: 100%;
+
+                    @include group.contain-flex($gap: 2rem) {
+                        flex-basis: auto;
+                    }
+
+                    --group-align-items: center;
+                    --group-justify-content: space-evenly;
+                }
+
+                &__text,
+                &__media {
+                    margin-block: 4rem;
+                }
+            }
+
+            @container (inline-size < #{queries.rem(1300)}) {
+                #{$select} {
+                    &__media {
+                        max-width: 65ch;
+                        margin-inline: auto;
+                        --group-justify-content: center;
+
+                        font-size: clamp(0.6em, 2vw, 1em);
+                    }
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin reverse-order {
+    #{$select} {
+        &--reverse-order {
+            --media-text-clip-path: polygon(0 7%, 100% 0, 100% 93%, 0 100%);
+            --media-text-picture-background-rotate: 4deg;
+
+            --media-text-background-color: var(--color-second);
+            --media-text-color: var(--main-text-color);
+            --media-text-container-background-color: var(--color-first-a);
+
+            #{$select} {
+                &__group {
+                    flex-direction: row-reverse;
+                }
+            }
+
+            @content;
+        }
+    }
+}

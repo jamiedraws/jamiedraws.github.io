@@ -1,0 +1,76 @@
+$select: ".header-text-group" !default;
+
+// config
+@use "./../config/queries";
+@use "./../config/fonts";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/group";
+@use "Shared/scss/templates/base/abstracts/space";
+
+@mixin base {
+    #{$select} {
+        flex-basis: clamp(
+            var(--media-text-min-height, 35rem),
+            var(--media-text-range-height, 50vmax),
+            var(--media-text-max-height, 40rem)
+        );
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        --group-align-items: center;
+        --group-justify-content: space-evenly;
+
+        &__group {
+            @include group.contain-flex($gap: 3rem) {
+            }
+        }
+
+        &__header {
+            text-align: right;
+        }
+
+        &__text {
+            flex-basis: 37ch;
+
+            @include space.between-flow-elements($gap: 2rem) {
+            }
+        }
+
+        &__title {
+            @include fonts.base-em(60);
+            line-height: 1;
+
+            > span {
+                display: block;
+                font-size: fonts.cascade-em(30);
+            }
+        }
+
+        @content;
+    }
+}
+
+@mixin reverse-order {
+    #{$select} {
+        &--reverse-order {
+            #{$select} {
+                &__group {
+                    flex-direction: row-reverse;
+                }
+
+                &__header {
+                    text-align: left;
+                }
+
+                &__text {
+                    text-align: right;
+                }
+            }
+
+            @content;
+        }
+    }
+}

@@ -1,0 +1,21 @@
+$select: ".block-header-text" !default;
+
+// config
+@use "./../config/queries";
+@use "./../config/fonts";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/space";
+
+@mixin base {
+    #{$select} {
+        &__text {
+            max-width: 71ch;
+
+            @include space.between-flow-elements($gap: 1rem) {
+            }
+        }
+
+        @content;
+    }
+}

@@ -1,0 +1,109 @@
+@use "sass:math";
+
+$base: 1 !default;
+$scroll-offset: 2em !default;
+
+// config
+@use "./../config/colors";
+@use "./../config/fonts";
+@use "./../config/queries";
+
+// layouts
+@use "Shared/scss/templates/base/layouts/document";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/background";
+@use "Shared/scss/templates/base/abstracts/space";
+
+%separate-flow-elements {
+    margin-top: var(--text-flow-separate-margin, 1rem);
+}
+
+%heading-rules {
+    font-size: clamp(fonts.rem(35), 5vw, fonts.rem(50));
+    line-height: 1.1;
+}
+
+@mixin base {
+    @include fonts.declare;
+
+    @include document.base;
+
+    h1 {
+        @extend %heading-rules;
+
+        + p {
+            @extend %separate-flow-elements;
+        }
+    }
+
+    h2,
+    legend {
+        @extend %heading-rules;
+    }
+
+    h3 {
+        @extend %heading-rules;
+    }
+
+    ol {
+        list-style: decimal;
+    }
+
+    input {
+        line-height: inherit;
+    }
+
+    fieldset {
+        border: 0;
+        margin: 0;
+        padding: 0;
+    }
+
+    sup {
+        bottom: 0;
+        font-family: Helvetica, sans-serif;
+    }
+
+    a {
+        display: inline-block;
+    }
+}
+
+@mixin root {
+    :root {
+        @include colors.scope;
+        @include fonts.scope;
+
+        --text-flow-separate-margin: 1rem;
+    }
+
+    html {
+        scroll-behavior: smooth;
+        scroll-padding-top: calc(
+            var(--scrollable-content-height, #{queries.em(0)}) + #{$scroll-offset}
+        );
+
+        font-size: #{$base}rem;
+
+        @media all and (max-width: queries.get(document-mobile-portrait)) {
+            font-size: clamp(#{math.div($base, 2)}rem, 3.5vw, #{$base}rem);
+        }
+    }
+}
+
+@mixin body {
+    body {
+        font: fonts.rem(20) var(--main-font-body);
+        line-height: 1.45;
+        color: var(--main-text-color);
+
+        @include background.color-map(
+            $background-color: var(--main-background-color),
+            $text-color: var(--main-text-color)
+        );
+    }
+}
+
+@mixin graphics {
+}

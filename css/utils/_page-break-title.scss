@@ -1,0 +1,30 @@
+$select: ".page-break-title" !default;
+
+// config
+@use "./../config/queries";
+@use "./../config/fonts";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/divider-line";
+
+@mixin base {
+    #{$select} {
+        @include divider-line.base;
+
+        // font-size: fonts.em(20);
+
+        margin-inline: 0;
+
+        &::before,
+        &::after {
+            opacity: 0.25;
+        }
+
+        > span {
+            order: -1;
+            padding-inline-end: 1rem;
+        }
+
+        @content;
+    }
+}

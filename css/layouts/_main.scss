@@ -1,0 +1,105 @@
+$select: ".main" !default;
+
+// config
+@use "./../config/queries";
+@use "./../config/fonts";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/group";
+@use "Shared/scss/templates/base/abstracts/space";
+
+@mixin base {
+    #{$select} {
+        flex-basis: clamp(30rem, 50vmax, 40rem);
+
+        display: flex;
+        flex-direction: column;
+
+        container: main/inline-size;
+
+        @container (inline-size > #{queries.set(1000)}) {
+            #{$select} {
+                &__picture {
+                    order: 1;
+                }
+            }
+        }
+
+        @container (inline-size < #{queries.set(1000)}) {
+            #{$select} {
+                &__container {
+                    max-width: 50ch;
+                    margin-inline: auto;
+
+                    --group-justify-content: center;
+                }
+            }
+        }
+
+        &__container {
+            --group-gap-xy-axis: 3rem 1rem;
+            --group-justify-content: center;
+        }
+
+        &__group {
+            @include group.contain-flex($gap: var(--group-gap-xy-axis, 1rem)) {
+            }
+
+            align-items: var(--group-align-items, center);
+            justify-content: var(--group-justify-content, space-around);
+        }
+
+        &__picture {
+            flex-basis: clamp(queries.em(150), 30vw, queries.em(300));
+            border-radius: 100%;
+            overflow: hidden;
+        }
+
+        &__logo {
+        }
+
+        &__text {
+            flex-basis: 50ch;
+
+            --group-justify-content: flex-start;
+
+            @include space.between-flow-elements(
+                $gap: var(--text-flow-separate-margin)
+            ) {
+            }
+        }
+
+        &__profiles {
+            --social-scale-size: 2em;
+        }
+
+        &__tech-stack {
+            order: 1;
+            flex-basis: 100%;
+
+            margin-top: 3rem;
+
+            --group-gap-xy-axis: 1rem;
+            --ui-icon-scale-size: 1.7em;
+
+            &::before {
+                content: "";
+                flex-basis: 1px;
+                width: 1px;
+
+                display: block;
+                align-self: stretch;
+
+                background: currentColor;
+
+                transform: rotate(15deg);
+            }
+
+            dt {
+                order: -1;
+            }
+        }
+
+        @content;
+    }
+}

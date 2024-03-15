@@ -1,0 +1,28 @@
+$select: ".ui-icon-text" !default;
+
+@mixin get-element($id: "") {
+    &[href*="#{$id}"] {
+        @content;
+    }
+}
+
+@mixin base {
+    #{$select} {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+
+        --ui-icon-scale-size: 1.4em;
+
+        &:not(:hover),
+        &:not(:focus) {
+            text-decoration: none;
+        }
+
+        @include get-element("github.com") {
+            --ui-icon-scale-size: 2em;
+        }
+
+        @content;
+    }
+}

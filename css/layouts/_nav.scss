@@ -1,0 +1,137 @@
+$select: ".nav" !default;
+
+// config
+@use "./../config/fonts";
+@use "./../config/queries";
+
+// layouts
+@use "Shared/scss/templates/base/layouts/nav" with (
+    $colors: (
+        text: var(--nav-text-color, var(--color-first)),
+        background: var(--nav-background-color, var(--main-background-color)),
+        button-close: var(--nav-button-close-color, var(--nav-text-color))
+    ),
+    $mq: (
+        container-min: queries.get(navbar),
+        container-max: queries.get(navbar)
+    )
+);
+
+// abstracts
+@use "./../abstracts/text";
+
+@mixin base {
+    @include nav.base {
+        font-weight: 600;
+        font-size: inherit;
+
+        text-transform: uppercase;
+        box-shadow: none;
+
+        &__in > &__title {
+            display: none;
+        }
+
+        &__logo {
+            display: flex;
+            align-items: center;
+
+            @media (prefers-color-scheme: dark) {
+                filter: invert(1);
+            }
+        }
+
+        &__link {
+            text-transform: capitalize;
+        }
+
+        &__underlay {
+            background: transparent;
+
+            &::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: var(--nav-underlay-color, white);
+                opacity: 0.95;
+            }
+        }
+    }
+
+    @include nav.bar {
+        &__logo {
+            flex-basis: 7em;
+        }
+
+        &__pane,
+        &__pane::before,
+        &__pane::after {
+            background: var(
+                --nav-link-background-color,
+                var(--nav-background-color)
+            );
+        }
+
+        &__list {
+            justify-content: flex-end;
+        }
+
+        &__list > &__logo {
+            display: none;
+        }
+
+        &__link {
+            padding: 0.75em;
+        }
+    }
+
+    @include nav.drawer {
+        &__in {
+            padding: var(--section-frame);
+        }
+
+        &__in > &__logo {
+            max-width: 4em;
+            padding: 0;
+        }
+
+        &__logo {
+            padding: 0;
+            max-width: 5em;
+        }
+
+        &__label {
+            margin-inline: 0;
+        }
+
+        &__list > &__logo {
+            order: -1;
+        }
+
+        &__list {
+            &::before {
+                content: "";
+                flex-basis: 100%;
+                display: block;
+                height: 1px;
+                background: currentColor;
+                opacity: 0.5;
+            }
+        }
+
+        & &__link {
+            padding: 1rem;
+        }
+
+        &__link {
+            background: var(
+                --nav-link-background-color,
+                var(--nav-background-color)
+            );
+        }
+    }
+
+    #{$select} {
+        @content;
+    }
+}

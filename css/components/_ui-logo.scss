@@ -1,0 +1,168 @@
+$select: ".ui-logo" !default;
+
+// config
+@use "./../config/queries";
+
+@mixin get-element($id: "") {
+    &:has(use[href*="#{$id}"]),
+    &:has(svg[id*="#{$id}"]) {
+        @content;
+    }
+}
+
+@mixin base {
+    #{$select} {
+        font-size: var(--ui-logo-scale-size, 1rem);
+
+        display: flex;
+        align-items: center;
+
+        > svg {
+            width: var(--ui-logo-width, 1em);
+            height: var(--ui-logo-height, 1em);
+            fill: currentColor;
+        }
+
+        @include get-element("klaviyo") {
+            --ui-logo-scale-size: 0.45em;
+
+            --ui-logo-width: #{queries.em(300)};
+            --ui-logo-height: #{queries.em(88)};
+        }
+
+        @include get-element("bazaarvoice") {
+            --ui-logo-scale-size: 0.2em;
+
+            --ui-logo-width: #{queries.em(408)};
+            --ui-logo-height: #{queries.em(331)};
+        }
+
+        @include get-element("trustpilot") {
+            --ui-logo-scale-size: 0.85em;
+
+            --ui-logo-width: #{queries.em(204)};
+            --ui-logo-height: #{queries.em(50)};
+        }
+
+        @include get-element("shopify") {
+            --ui-logo-scale-size: 0.75em;
+
+            --ui-logo-width: #{queries.em(175)};
+            --ui-logo-height: #{queries.em(50)};
+        }
+
+        @include get-element("squarespace") {
+            --ui-logo-scale-size: 1.2em;
+
+            --ui-logo-width: #{queries.em(166)};
+            --ui-logo-height: #{queries.em(24)};
+        }
+
+        @include get-element("wordpress") {
+            --ui-logo-scale-size: 1em;
+
+            --ui-logo-width: #{queries.em(175)};
+            --ui-logo-height: #{queries.em(36)};
+        }
+
+        @include get-element("microsoft-net") {
+            --ui-logo-scale-size: 1em;
+
+            --ui-logo-width: #{queries.em(175)};
+            --ui-logo-height: #{queries.em(36)};
+        }
+
+        @include get-element("github") {
+            --ui-logo-scale-size: 0.55em;
+
+            --ui-logo-width: #{queries.em(166)};
+            --ui-logo-height: #{queries.em(45)};
+        }
+
+        @include get-element("klarna") {
+            --ui-logo-scale-size: 1em;
+
+            --ui-logo-width: #{queries.em(91)};
+            --ui-logo-height: #{queries.em(22)};
+        }
+
+        @include get-element("afterpay") {
+            --ui-logo-scale-size: 0.9em;
+
+            --ui-logo-width: #{queries.em(180)};
+            --ui-logo-height: #{queries.em(34)};
+        }
+
+        @include get-element("affirm") {
+            --ui-logo-scale-size: 1em;
+
+            --ui-logo-width: #{queries.em(80)};
+            --ui-logo-height: #{queries.em(32)};
+        }
+
+        @include get-element("venmo") {
+            --ui-logo-scale-size: 0.5em;
+
+            --ui-logo-width: #{queries.em(211)};
+            --ui-logo-height: #{queries.em(41)};
+        }
+
+        @include get-element("paypal") {
+            --ui-logo-scale-size: 1.3em;
+
+            --ui-logo-width: #{queries.em(92)};
+            --ui-logo-height: #{queries.em(23)};
+        }
+
+        @include get-element("amazon") {
+            --ui-logo-scale-size: 0.75em;
+
+            --ui-logo-width: #{queries.em(114)};
+            --ui-logo-height: #{queries.em(35)};
+        }
+
+        @include get-element("vimeo") {
+            --ui-logo-scale-size: 1em;
+
+            --ui-logo-width: #{queries.em(114)};
+            --ui-logo-height: #{queries.em(32)};
+        }
+
+        @include get-element("google") {
+            --ui-logo-scale-size: 0.45em;
+
+            --ui-logo-width: #{queries.em(272)};
+            --ui-logo-height: #{queries.em(92)};
+        }
+
+        @include get-element("meta") {
+            --ui-logo-scale-size: 0.45em;
+
+            --ui-logo-width: #{queries.em(272)};
+            --ui-logo-height: #{queries.em(54)};
+        }
+
+        @include get-element("photoshop") {
+            --ui-logo-scale-size: 0.45em;
+
+            --ui-logo-width: #{queries.em(100)};
+            --ui-logo-height: #{queries.em(100)};
+        }
+
+        @include get-element("adobexd") {
+            --ui-logo-scale-size: 0.45em;
+
+            --ui-logo-width: #{queries.em(100)};
+            --ui-logo-height: #{queries.em(100)};
+        }
+
+        @include get-element("figma") {
+            --ui-logo-scale-size: 0.7em;
+
+            --ui-logo-width: #{queries.em(38)};
+            --ui-logo-height: #{queries.em(57)};
+        }
+
+        @content;
+    }
+}

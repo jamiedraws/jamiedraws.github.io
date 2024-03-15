@@ -1,0 +1,131 @@
+$select: ".slide" !default;
+
+// layouts
+@use "Shared/scss/templates/base/layouts/slide" with (
+    $select: $select,
+    $desktop: 0
+);
+
+// config
+@use "./../config/fonts";
+@use "./../config/queries";
+
+@mixin base {
+    @include slide.base;
+
+    #{$select} {
+        --carousel-button-color-background: white;
+        --carousel-button-color-background-active: var(
+            --carousel-button-color-background
+        );
+
+        --carousel-button-color-active: var(--main-text-color);
+        --carousel-button-color-inactive: var(--main-text-color);
+
+        --carousel-length: 100%;
+        --carousel-slide-length: calc(
+            var(--carousel-slide-item-length) *
+                var(--carousel-view-item-quantity)
+        );
+        --carousel-nav-length: var(--carousel-slide-length);
+
+        --carousel-offset: 7em;
+        --carousel-inset: 0.1em;
+
+        --carousel-view-item-quantity: var(
+            --carousel-view-item-quantity-inherit,
+            1
+        );
+
+        max-width: calc(var(--carousel-length) + var(--carousel-offset));
+        margin: auto;
+
+        &__into {
+            max-width: var(--carousel-slide-length);
+
+            margin: auto;
+
+            &::-webkit-scrollbar {
+                background: rgba(0, 0, 0, 0);
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background: rgba(0, 0, 0, 0);
+            }
+        }
+
+        &__container {
+            position: relative;
+        }
+
+        &__item {
+            align-items: stretch;
+            justify-content: center;
+
+            max-width: calc(100% / var(--carousel-view-item-quantity));
+        }
+
+        &__nav {
+            max-width: calc(
+                var(--carousel-nav-length) + var(--carousel-offset) -
+                    var(--carousel-inset)
+            );
+            width: 100%;
+
+            z-index: 2;
+            pointer-events: none;
+
+            button {
+                pointer-events: all;
+
+                background: var(--carousel-button-color-background);
+                color: var(--carousel-button-color-inactive);
+
+                border: none;
+
+                &:hover,
+                &:focus {
+                    color: var(--carousel-button-color-active);
+                    background: var(--carousel-button-color-background-active);
+                }
+
+                > svg {
+                    fill: currentColor;
+                    stroke-width: 0.5px;
+                    transform: rotate(0.25turn);
+                }
+            }
+        }
+
+        @media all and (max-width: slide.$desktop) {
+            &__nav {
+                justify-content: center;
+                gap: 0.5rem;
+            }
+        }
+
+        @content;
+    }
+}
+
+@mixin responsive {
+    #{$select} {
+        &--responsive {
+            @media all and (min-width: queries.section-container(850)) {
+                --carousel-view-item-quantity: 2;
+            }
+
+            @media all and (min-width: queries.section-container(1220)) {
+                --carousel-view-item-quantity: 3;
+
+                #{$select} {
+                    &__nav {
+                        visibility: var(--carousel-nav-visibility, visible);
+                    }
+                }
+            }
+
+            @content;
+        }
+    }
+}
