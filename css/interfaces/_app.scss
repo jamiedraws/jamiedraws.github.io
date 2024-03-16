@@ -6,6 +6,7 @@ $scroll-offset: 4em;
     $base: $base
 );
 @use "Shared/scss/templates/base/utils/scope";
+@use "Shared/scss/templates/base/utils/svg-icon";
 @use "Shared/scss/templates/base/utils/sr";
 @use "./../utils/view" with (
     $scroll-offset: $scroll-offset
@@ -15,7 +16,6 @@ $scroll-offset: 4em;
 // components
 @use "Shared/scss/templates/base/components/link";
 @use "Shared/scss/templates/base/components/skip-link";
-
 
 // layouts
 @use "./../layouts/document" with (
@@ -31,6 +31,7 @@ $scroll-offset: 4em;
     @include view.base;
     @include section.base;
     @include sr.base;
+    @include svg-icon.base;
 
     // components
     @include link.base;

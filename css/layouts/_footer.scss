@@ -11,28 +11,24 @@ $select: ".footer" !default;
 
 @mixin base {
     #{$select} {
-        --section-frame: 1rem;
+        flex-basis: clamp(
+            var(--media-text-min-height, 30rem),
+            var(--media-text-range-height, 50vmax),
+            var(--media-text-max-height, 35rem)
+        );
 
-        overflow: hidden;
-        text-align: center;
-
-        @include background.color-first-theme;
+        @include background.color-map(
+            $background-color: var(--main-text-color),
+            $text-color: var(--main-background-color)
+        ) {
+        }
 
         nav {
             @include list.structure($offset: 0);
-
-            @media all and (max-width: queries.set(640)) {
-                @include list.convert-to-grid($width: 12em) {
-                    > * {
-                        display: block;
-                        text-align: left;
-                    }
-                }
+            @include list.inline {
             }
 
-            @media all and (min-width: queries.set(640)) {
-                @include list.inline;
-            }
+            margin-top: 2rem;
         }
 
         a {
@@ -51,13 +47,6 @@ $select: ".footer" !default;
 
             &:not(:hover):not(:focus) {
                 text-decoration: none;
-            }
-        }
-
-        @media all and (max-width: queries.section-container(500)) {
-            address {
-                max-width: 35ch;
-                margin-inline: auto;
             }
         }
 

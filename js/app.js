@@ -1,6 +1,717 @@
 /******/ (function() { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "../../Library/Shared/ts/api/carousel/slide/adapters/slide-carousel.ts":
+/*!*****************************************************************************!*\
+  !*** ../../Library/Shared/ts/api/carousel/slide/adapters/slide-carousel.ts ***!
+  \*****************************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ SlideCarouselAdapter; }
+/* harmony export */ });
+/* harmony import */ var Shared_ts_api_carousel_slide_slide__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! Shared/ts/api/carousel/slide/slide */ "../../Library/Shared/ts/api/carousel/slide/slide.ts");
+
+class SlideCarouselAdapter {
+  /**
+   * An adapter Api that implements the ICarousel contract while communicating with the Slide Js Api
+   * @param container Element
+   */
+  constructor(container) {
+    var _this$api, _this$api2;
+
+    this.api = void 0;
+    this.container = void 0;
+    this.parent = void 0;
+    this.children = void 0;
+    this.container = container;
+    this.api = this.create(container);
+    this.parent = (_this$api = this.api) == null ? void 0 : _this$api.parent;
+    this.children = (_this$api2 = this.api) == null ? void 0 : _this$api2.children;
+  }
+
+  create(element) {
+    var result;
+
+    if (element) {
+      var id = element.querySelector('[id][class*="slide__into"]');
+
+      if (id) {
+        result = Shared_ts_api_carousel_slide_slide__WEBPACK_IMPORTED_MODULE_0__["default"].into(id, {
+          root: element
+        }, api => {
+          var _api$root;
+
+          (_api$root = api.root) == null ? void 0 : _api$root.classList.add("slide--is-ready");
+          return api;
+        });
+      } else {
+        console.error({
+          message: "An element requires the class name 'slide__into' and requires an id attribute. No element was found from the container element context.",
+          element
+        });
+      }
+    }
+
+    return result;
+  }
+
+  isAuto() {
+    var _this$api$isAuto, _this$api3;
+
+    return (_this$api$isAuto = (_this$api3 = this.api) == null ? void 0 : _this$api3.isAuto()) != null ? _this$api$isAuto : false;
+  }
+
+  setAuto(status) {
+    var _this$api4;
+
+    (_this$api4 = this.api) == null ? void 0 : _this$api4.setAuto(status);
+  }
+
+  play(persistCurrentIndex) {
+    var _this$api5;
+
+    (_this$api5 = this.api) == null ? void 0 : _this$api5.play(persistCurrentIndex);
+  }
+
+  pause() {
+    var _this$api6;
+
+    (_this$api6 = this.api) == null ? void 0 : _this$api6.pause();
+  }
+
+  prev() {
+    var _this$api7;
+
+    (_this$api7 = this.api) == null ? void 0 : _this$api7.prev();
+  }
+
+  next() {
+    var _this$api8;
+
+    (_this$api8 = this.api) == null ? void 0 : _this$api8.next();
+  }
+
+  goto(index) {
+    var _this$api9;
+
+    (_this$api9 = this.api) == null ? void 0 : _this$api9.goto(index);
+  }
+
+  watch(task) {
+    var _this$api10;
+
+    (_this$api10 = this.api) == null ? void 0 : _this$api10.watch(task);
+  }
+
+  nextIndex() {
+    var _this$api11;
+
+    return (_this$api11 = this.api) == null ? void 0 : _this$api11.nextIndex();
+  }
+
+  currentIndex() {
+    var _this$api12;
+
+    return (_this$api12 = this.api) == null ? void 0 : _this$api12.currentIndex();
+  }
+
+  prevIndex() {
+    var _this$api13;
+
+    return (_this$api13 = this.api) == null ? void 0 : _this$api13.prevIndex();
+  }
+
+  countChildren() {
+    var _this$api14;
+
+    return (_this$api14 = this.api) == null ? void 0 : _this$api14.countChildren();
+  }
+
+  getDelay() {
+    var _this$api15;
+
+    return (_this$api15 = this.api) == null ? void 0 : _this$api15.getDelay();
+  }
+
+  setDelay(delay) {
+    var _this$api16;
+
+    return (_this$api16 = this.api) == null ? void 0 : _this$api16.setDelay(delay);
+  }
+
+  getIndex(index) {
+    var _this$api17;
+
+    return (_this$api17 = this.api) == null ? void 0 : _this$api17.getIndex(index);
+  }
+
+  setIndex(index) {
+    var _this$api18;
+
+    (_this$api18 = this.api) == null ? void 0 : _this$api18.setIndex(index);
+  }
+
+}
+
+/***/ }),
+
+/***/ "../../Library/Shared/ts/api/carousel/slide/slide.ts":
+/*!***********************************************************!*\
+  !*** ../../Library/Shared/ts/api/carousel/slide/slide.ts ***!
+  \***********************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export Slide */
+/* harmony import */ var core_js_modules_web_dom_collections_for_each_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each.js */ "../../Library/node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_es_parse_int_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.parse-int.js */ "../../Library/node_modules/core-js/modules/es.parse-int.js");
+/* harmony import */ var core_js_modules_es_parse_int_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_parse_int_js__WEBPACK_IMPORTED_MODULE_1__);
+
+
+
+// @ts-nocheck
+var generate = function generate(properties, o) {
+  var x = Object.defineProperties(o || {}, properties);
+  return x;
+};
+
+var toArray = function toArray(collection) {
+  return Array.from(collection);
+};
+
+var slide = generate({
+  defaults: {
+    value: generate({
+      delay: {
+        value: 3000
+      },
+      noScroll: {
+        value: "slide__into--no-scroll"
+      },
+      error: {
+        value: "The passed error code could not be found."
+      }
+    })
+  },
+  docs: {
+    value: generate({
+      error: {
+        value: "https://github.com/jamiedraws/Slide/wiki/Slide.js#api-errors"
+      }
+    })
+  },
+  errors: {
+    value: generate({
+      "ERR-E": {
+        value: "The passed 'element' must be an element."
+      },
+      "ERR-P": {
+        value: "The passed 'element' could not be found."
+      },
+      "ERR-N": {
+        value: "The passed 'element' is not a node element."
+      },
+      "ERR-X": {
+        value: "The passed 'index' is not a number."
+      },
+      "ERR-M": {
+        value: "The passed error 'code' or 'message' is not a string."
+      },
+      "ERR-C": {
+        value: "The passed error 'code' is not a string."
+      }
+    })
+  },
+  team: {
+    value: []
+  },
+  request: {
+    value: function value(id) {
+      return this.team[id];
+    }
+  },
+  observer: {
+    value: function value(parent, children, cb) {
+      if (window.hasOwnProperty("IntersectionObserver")) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.intersectionRatio > 0 && entry.isIntersecting) {
+              var items = toArray(children);
+
+              var _index = items.indexOf(entry.target);
+
+              cb(_index);
+            }
+          });
+        }, {
+          root: parent,
+          rootMargin: "0px",
+          threshold: 0.9
+        });
+        return function (children) {
+          var items = toArray(children);
+          items.forEach(function (item) {
+            io.observe(item);
+          });
+        };
+      } else {
+        return function () {
+          var noScroll = slide.defaults.noScroll;
+          this.shim = true;
+          this.parent.classList.add(noScroll);
+        };
+      }
+    }
+  },
+  manager: {
+    value: generate({
+      config: {
+        value: function value(options) {
+          var self = this;
+
+          if (typeof options === "object") {
+            Object.keys(options).forEach(function (option) {
+              Object.defineProperty(self, option, {
+                enumerable: true,
+                value: options[option]
+              });
+            });
+          }
+        }
+      },
+      create: {
+        value: function value(api, id, parent, config) {
+          var self = Object.create(api);
+          Object.defineProperties(self, {
+            name: {
+              set: function set(parent) {
+                this.parent = parent;
+              },
+              get: function get() {
+                return this.parent.id;
+              }
+            },
+            id: {
+              value: id
+            }
+          });
+          self.name = parent;
+          this.config.call(self, config);
+          return self;
+        }
+      },
+      assign: {
+        value: function value() {
+          var self = Object.create(this);
+          self.index = 0;
+          self.shim = false;
+          self.auto = false;
+          self.handleRotation = true;
+          self.timer = 0;
+          self.delay = slide.defaults.delay;
+          self.scrollIntoViewOptions = {
+            block: "nearest",
+            inline: "start"
+          };
+          return self;
+        }
+      },
+      observer: {
+        value: function value(parent, children) {
+          var self = this;
+          return slide.observer(parent, children, function (index) {
+            self.setIndex(index);
+            self.setCallback();
+          });
+        }
+      },
+      getIndex: {
+        value: function value(index) {
+          var result = this.index;
+          var children = this.children.length;
+
+          if (typeof index === "number") {
+            result = index;
+          }
+
+          if (result === children) {
+            result = 0;
+          } else if (result < 0) {
+            result = children - 1;
+          }
+
+          return result;
+        }
+      },
+      setIndex: {
+        value: function value(index) {
+          this.index = this.getIndex(index);
+        }
+      },
+      setRotation: {
+        value: function value() {
+          var item = this.children[this.index];
+          item.scrollIntoView(this.scrollIntoViewOptions);
+        }
+      },
+      isValidNumber: {
+        value: function value(number) {
+          return typeof number === "number" && !isNaN(number);
+        }
+      },
+      setDelay: {
+        value: function value(time) {
+          var parseTime = parseInt(time);
+          var illegal = !this.isValidNumber(parseTime) || parseTime < slide.defaults.delay;
+
+          if (illegal) {
+            parseTime = this.delay;
+          }
+
+          this.delay = parseTime;
+        }
+      },
+      setCallback: {
+        value: function value() {
+          if (typeof this.handleCallback === "function") {
+            this.handleCallback(this.index, this.getIndex(this.index - 1), this.getIndex(this.index + 1));
+          }
+        }
+      },
+      setTimer: {
+        value: function value(cb) {
+          if (this.auto) {
+            this.timer = setTimeout(cb, this.delay);
+          } else {
+            clearTimeout(this.timer);
+          }
+        }
+      },
+      routeCallback: {
+        value: function value(cb) {
+          if (this.shim) {
+            this.setCallback(cb);
+          }
+
+          cb();
+        }
+      },
+      setTask: {
+        value: function value(index) {
+          var self = this;
+          self.setDelay();
+          self.setIndex(index);
+
+          if (this.handleRotation) {
+            self.setRotation();
+          }
+
+          self.routeCallback(function () {
+            self.setTimer(function () {
+              self.setTask(self.index + 1);
+            });
+          });
+        }
+      }
+    })
+  },
+  api: {
+    value: generate({
+      parent: {
+        set: function set(parent) {
+          this.validateNodeElement(parent);
+          var worker = slide.request(this.id);
+          worker.id = this.id;
+          worker.parent = parent;
+          var children = parent.children;
+
+          if (children.length === 0) {
+            var shadowRoot = parent.getRootNode();
+
+            if (shadowRoot instanceof ShadowRoot) {
+              children = shadowRoot.host.querySelectorAll("[slot=\"slide\"]");
+            }
+          }
+
+          worker.observe = worker.observer(worker.parent, children);
+          this.children = children;
+        },
+        get: function get() {
+          var worker = slide.request(this.id);
+          return worker.parent;
+        }
+      },
+      validateNodeElement: {
+        value: function value(element) {
+          if (typeof element !== "object") {
+            this.getError("ERR-E");
+          }
+
+          if (element === null) {
+            this.getError("ERR-P");
+          }
+
+          if (element.nodeType !== 1) {
+            this.getError("ERR-N");
+          }
+
+          return true;
+        }
+      },
+      toArray: {
+        value: toArray
+      },
+      children: {
+        set: function set(children) {
+          var worker = slide.request(this.id);
+          worker.children = children;
+          worker.observe(worker.children);
+        },
+        get: function get() {
+          var worker = slide.request(this.id);
+          return worker.children;
+        }
+      },
+      isAuto: {
+        value: function value() {
+          var worker = slide.request(this.id);
+          return worker.auto;
+        }
+      },
+      setAuto: {
+        value: function value(status) {
+          var worker = slide.request(this.id);
+
+          if (typeof status === "boolean") {
+            worker.auto = status;
+          }
+        }
+      },
+      setScrollIntoView: {
+        value: function value(options) {
+          var worker = slide.request(this.id);
+
+          if (typeof options === "object" || typeof options === "boolean") {
+            worker.scrollIntoViewOptions = options;
+          }
+        }
+      },
+      watch: {
+        value: function value(task) {
+          var worker = slide.request(this.id);
+          worker.handleCallback = task.bind(this);
+
+          if (!("IntersectionObserver" in window)) {
+            worker.setCallback();
+          }
+        }
+      },
+      countChildren: {
+        value: function value() {
+          return this.children.length;
+        }
+      },
+      getDelay: {
+        value: function value() {
+          var worker = slide.request(this.id);
+          return worker.delay;
+        }
+      },
+      setDelay: {
+        value: function value(delay) {
+          var worker = slide.request(this.id);
+          worker.setDelay(delay);
+        }
+      },
+      setError: {
+        value: function value(code, message) {
+          if (typeof code === "string" && typeof message === "string") {
+            Object.defineProperty(slide.errors, code, {
+              value: message
+            });
+          } else {
+            this.getError("ERR-M");
+          }
+        }
+      },
+      getError: {
+        value: function value(code) {
+          if (typeof code !== "string") {
+            code = "ERR-C";
+          }
+
+          var error = slide.errors[code] || slide.defaults.error;
+          var help = slide.docs.error;
+          var message = code + ": " + error + " / " + help;
+          throw message;
+        }
+      },
+      hasError: {
+        value: function value(code) {
+          return slide.errors.hasOwnProperty(code);
+        }
+      },
+      config: {
+        value: function value(options) {
+          var worker = slide.request(this.id);
+          worker.config.call(this, options);
+        }
+      },
+      setShim: {
+        enumerable: true,
+        value: function value(status) {
+          var worker = slide.request(this.id);
+
+          if (typeof status === "boolean") {
+            worker.shim = status;
+          }
+        }
+      },
+      play: {
+        enumerable: true,
+        value: function value(persistCurrentIndex) {
+          var worker = slide.request(this.id);
+          var index = typeof persistCurrentIndex === "boolean" && persistCurrentIndex ? worker.index : worker.index + 1;
+          this.pause();
+          worker.auto = true;
+          worker.setTask(index);
+        }
+      },
+      pause: {
+        enumerable: true,
+        value: function value() {
+          var worker = slide.request(this.id);
+          worker.auto = false;
+          clearTimeout(worker.timer);
+        }
+      },
+      prev: {
+        enumerable: true,
+        value: function value() {
+          var worker = slide.request(this.id);
+          this.pause();
+          worker.setTask(worker.index - 1);
+        }
+      },
+      next: {
+        enumerable: true,
+        value: function value() {
+          var worker = slide.request(this.id);
+          this.pause();
+          worker.setTask(worker.index + 1);
+        }
+      },
+      prevIndex: {
+        value: function value() {
+          var worker = slide.request(this.id);
+          return worker.getIndex(worker.index - 1);
+        }
+      },
+      nextIndex: {
+        value: function value() {
+          var worker = slide.request(this.id);
+          return worker.getIndex(worker.index + 1);
+        }
+      },
+      currentIndex: {
+        value: function value() {
+          var worker = slide.request(this.id);
+          return worker.index;
+        }
+      },
+      getIndex: {
+        value: function value(index) {
+          if (typeof index !== "number") {
+            this.getError("ERR-X");
+          }
+
+          var worker = slide.request(this.id);
+          return worker.getIndex(index);
+        }
+      },
+      setIndex: {
+        value: function value(index) {
+          if (typeof index !== "number") {
+            this.getError("ERR-X");
+          }
+
+          var worker = slide.request(this.id);
+          return worker.setIndex(index);
+        }
+      },
+      handleRotation: {
+        value: function value(status) {
+          var worker = slide.request(this.id);
+
+          if (typeof status === "boolean") {
+            worker.handleRotation = status;
+          }
+        }
+      },
+      goto: {
+        enumerable: true,
+        value: function value(index) {
+          if (typeof index !== "number") {
+            this.getError("ERR-X");
+          }
+
+          var worker = slide.request(this.id);
+          this.pause();
+          worker.setIndex(index);
+          worker.setTask();
+        }
+      }
+    })
+  },
+  interface: {
+    value: generate({
+      into: {
+        value: function value(parent, init, app) {
+          var worker = slide.manager.assign();
+          var task = app;
+          var options = {};
+          slide.team.push(worker);
+
+          if (typeof init === "function") {
+            task = init;
+          }
+
+          if (typeof init === "object") {
+            options = init;
+          } else if (typeof app === "object") {
+            options = app;
+          }
+
+          var ui = slide.manager.create(slide.api, slide.team.length - 1, parent, options);
+          return task.call(ui, ui);
+        }
+      },
+      proto: {
+        value: function value(parameters) {
+          if (typeof parameters === "object") {
+            Object.create(slide.api, parameters);
+            Object.keys(parameters).forEach(function (parameter) {
+              Object.defineProperty(slide.api, parameter, {
+                writable: false,
+                configurable: false,
+                enumerable: true,
+                value: parameters[parameter]
+              });
+            });
+          }
+        }
+      }
+    })
+  }
+});
+var Slide = slide.interface;
+/* harmony default export */ __webpack_exports__["default"] = (Slide);
+
+/***/ }),
+
 /***/ "../../Library/Shared/ts/applications/navigation.ts":
 /*!**********************************************************!*\
   !*** ../../Library/Shared/ts/applications/navigation.ts ***!
@@ -135,6 +846,414 @@ var initializeFingerPrintNavBySocialProofElement = function initializeFingerPrin
   });
   return fpn;
 };
+
+/***/ }),
+
+/***/ "../../Library/Shared/ts/components/carousel.ts":
+/*!******************************************************!*\
+  !*** ../../Library/Shared/ts/components/carousel.ts ***!
+  \******************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ Carousel; }
+/* harmony export */ });
+/* harmony import */ var core_js_modules_web_dom_collections_for_each_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each.js */ "../../Library/node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_es_parse_int_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.parse-int.js */ "../../Library/node_modules/core-js/modules/es.parse-int.js");
+/* harmony import */ var core_js_modules_es_parse_int_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_parse_int_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var core_js_modules_es_array_iterator_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! core-js/modules/es.array.iterator.js */ "../../Library/node_modules/core-js/modules/es.array.iterator.js");
+/* harmony import */ var core_js_modules_es_array_iterator_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_iterator_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var core_js_modules_web_dom_collections_iterator_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! core-js/modules/web.dom-collections.iterator.js */ "../../Library/node_modules/core-js/modules/web.dom-collections.iterator.js");
+/* harmony import */ var core_js_modules_web_dom_collections_iterator_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_iterator_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var Shared_ts_observers_intersection__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! Shared/ts/observers/intersection */ "../../Library/Shared/ts/observers/intersection.ts");
+/* harmony import */ var Shared_ts_utils_html__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! Shared/ts/utils/html */ "../../Library/Shared/ts/utils/html.ts");
+
+
+
+
+
+
+class Carousel {
+  /**
+   * Represents the CSS class name for the selected thumbnail button
+   */
+
+  /**
+   * Represents the relationship between the carousel's container element and it's connected Carousel interface
+   */
+
+  /**
+   * Represents the relationship between the carousel's container element and it's connected event interface
+   */
+
+  /**
+   * Represents the relationship between the carousel's container element and it's connected control interface
+   */
+
+  /**
+   * Represents the element containing the carousel along with other user-interface components
+   */
+
+  /**
+   * Takes a carousel interface and integrates it with basic play controls
+   * @param context ICarousel
+   */
+  constructor(context) {
+    this.container = void 0;
+    this.container = context.container;
+    Carousel.baseInitialize(context, this);
+    Carousel.observeContainer(context, this);
+  }
+  /**
+   * Takes the ICarousel interface and uses the container element as a key to establish a new context to the interface. Next, a new watch callback is established that will notify observers on each rotation.
+   * @param context ICarousel
+   */
+
+
+  static baseInitialize(context, carousel) {
+    if (!context.container) return;
+    Carousel.context.set(context.container, context);
+    Carousel.events.set(context.container, []);
+    context.watch(() => {
+      Carousel.push(context, "rotation");
+    });
+  }
+  /**
+   * Filters through all events matching a specified name and invokes the handler callback function
+   * @param context ICarousel
+   * @param name string
+   */
+
+
+  static push(context, name) {
+    if (!context.container) return;
+    var events = Carousel.events.get(context.container);
+    if (!events) return;
+    events.filter(event => event.name === name).forEach(event => event.handler(context.currentIndex(), context.prevIndex(), context.nextIndex()));
+  }
+  /**
+   * Adds an event to be captured where a handler callback function can be invoked
+   * @param name string
+   * @param handler function
+   */
+
+
+  on(name, handler) {
+    if (!this.container) return;
+    var events = Carousel.events.get(this.container);
+    if (!events) return;
+    events.push({
+      name: name,
+      handler: handler
+    });
+  }
+  /**
+   * Removes an event from being captured
+   * @param name string
+   * @param handler function
+   */
+
+
+  off(name, handler) {
+    if (!this.container) return;
+    var events = Carousel.events.get(this.container);
+    if (!events) return;
+    var result = events.find(event => event.name === name && event.handler === handler);
+    if (!result) return;
+    var index = events.indexOf(result);
+    events.splice(index, 1);
+  }
+  /**
+   * Takes the carousel's container element as a key to look up it's connected carousel interface and returns the interface.
+   * @param container Element
+   * @returns ICarousel
+   */
+
+
+  static getContext(container) {
+    return this.context.get(container);
+  }
+  /**
+   * Takes the ICarousel interface and reads in any available key-value pairs from the "data-carousel-config" HTML attribute into an attribute processor.
+   * @param context ICarousel
+   */
+
+
+  static updateAttributes(context, carousel) {
+    if (!context.container) return;
+    var config = context.container.getAttribute("data-carousel-config");
+
+    if (config) {
+      try {
+        carousel.processAttributes(JSON.parse(config), context);
+      } catch (error) {
+        console.warn(error);
+      }
+    }
+  }
+  /**
+   * Takes the ICarouselConfig interface and converts key-value pairs into a string representation of the carousel configuration. This configuration replaces the previous configuration on data-carousel-config attribute.
+   * @param config ICarouselConfig
+   */
+
+
+  setAttributes(config) {
+    var container = this.container;
+
+    try {
+      container.dataset.carouselConfig = JSON.stringify(config);
+    } catch (error) {
+      console.warn(error);
+    }
+  }
+  /**
+   * Takes an ICarouselConfig interface along with an ICarousel interface and processes specific keys to operate using its values
+   * @param config ICarouselConfig
+   * @param context ICarousel
+   */
+
+
+  processAttributes(config, context) {
+    if (config.auto) {
+      context.setAuto(config.auto);
+    }
+
+    if (config.delay) {
+      context.setDelay(config.delay);
+    }
+  }
+  /**
+   * Takes the ICarousel interface, creates a new mutation observer on the container element and observes for attribute changes which will call the updateAttributes method
+   * @param context ICarousel
+   */
+
+
+  static observeContainer(context, carousel) {
+    if (!context.container) return;
+    this.updateAttributes(context, carousel);
+    var observer = new MutationObserver(mutationRecords => {
+      Carousel.updateAttributes(context, carousel);
+    });
+    observer.observe(context.container, {
+      attributes: true
+    });
+  }
+  /**
+   * Navigates to a designated slide.
+   * @param index number
+   */
+
+
+  goto(index) {
+    if (!this.container) return;
+    var context = Carousel.getContext(this.container);
+    if (!context) return;
+    context.goto(index);
+  }
+  /**
+   * Plays the carousel continuously.
+   */
+
+
+  play(persistCurrentIndex) {
+    if (!this.container) return;
+    var context = Carousel.getContext(this.container);
+    if (!context) return;
+    context.play(persistCurrentIndex);
+  }
+  /**
+   * Pauses the carousel
+   */
+
+
+  pause() {
+    if (!this.container) return;
+    var context = Carousel.getContext(this.container);
+    if (!context) return;
+    context.pause();
+  }
+  /**
+   * Advances the carousel to the next slide
+   */
+
+
+  next() {
+    if (!this.container) return;
+    var context = Carousel.getContext(this.container);
+    if (!context) return;
+    context.next();
+  }
+  /**
+   * Advances the carousel to the previous slide
+   */
+
+
+  prev() {
+    if (!this.container) return;
+    var context = Carousel.getContext(this.container);
+    if (!context) return;
+    context.prev();
+  }
+  /**
+   * Enables the carousel to play continuously when the carousel's container element intersects the viewport; otherwise, the carousel will automatically pause.
+   */
+
+
+  autoplay() {
+    var _context$parent;
+
+    if (!this.container) return;
+    var self = this;
+    var context = Carousel.getContext(this.container);
+    if (!context) return;
+    var id = (_context$parent = context.parent) == null ? void 0 : _context$parent.id;
+    var rangeControl = false;
+    (0,Shared_ts_observers_intersection__WEBPACK_IMPORTED_MODULE_4__.observer)("#" + id, {
+      inRange: record => {
+        if (!rangeControl) {
+          rangeControl = true;
+          self.play(true);
+        }
+      },
+      outRange: record => {
+        if (rangeControl) {
+          rangeControl = false;
+          self.pause();
+        }
+      },
+      unObserve: false,
+      options: {
+        threshold: [0.75]
+      }
+    });
+  }
+  /**
+   * Enables the carousel to activate the previous and next methods through user-interface components
+   */
+
+
+  enablePrevNextControls() {
+    var _context$container, _context$container2;
+
+    if (!this.container) return;
+    var context = Carousel.getContext(this.container);
+    if (!context) return;
+    var prevButton = (_context$container = context.container) == null ? void 0 : _context$container.querySelector(".slide__prev");
+    var nextButton = (_context$container2 = context.container) == null ? void 0 : _context$container2.querySelector(".slide__next");
+    prevButton == null ? void 0 : prevButton.addEventListener("click", this.prev.bind(context));
+    nextButton == null ? void 0 : nextButton.addEventListener("click", this.next.bind(context));
+  }
+  /**
+   * Enables the carousel to activate the play and pause methods through user-interface components
+   */
+
+
+  enablePlayPauseControls() {
+    var _context$container3, _context$container4;
+
+    if (!this.container) return;
+    var context = Carousel.getContext(this.container);
+    if (!context) return;
+    var playButton = (_context$container3 = context.container) == null ? void 0 : _context$container3.querySelector(".slide__play");
+    var pauseButton = (_context$container4 = context.container) == null ? void 0 : _context$container4.querySelector(".slide__pause");
+    playButton == null ? void 0 : playButton.addEventListener("click", event => this.play());
+    pauseButton == null ? void 0 : pauseButton.addEventListener("click", this.pause.bind(context));
+  }
+  /**
+   * Uses the array of thumbnail buttons to locate the previous button with the thumbnail CSS class name and removes it. Then, assigns the CSS class name to the current thumbnail button.
+   * @param thumbnailButton Element
+   * @param thumbnailButtons Element[]
+   */
+
+
+  static updateThumbnailNavigationMarker(thumbnailButton, thumbnailButtons) {
+    var previousButton = thumbnailButtons.find(thumbnailButton => thumbnailButton.classList.contains(Carousel.currentThumbnailCSSClassName));
+
+    if (previousButton) {
+      previousButton.classList.remove(Carousel.currentThumbnailCSSClassName);
+    }
+
+    if (thumbnailButton) {
+      thumbnailButton.classList.add(Carousel.currentThumbnailCSSClassName);
+    }
+  }
+  /**
+   * Takes an thumbnailButton element and extracts the index value from it and navigates the carousel to the specified index
+   * @param thumbnailButton Element
+   * @param context ICarousel
+   */
+
+
+  static updateThumbnailNavigation(thumbnailButton, context) {
+    var _thumbnailButton$getA;
+
+    var index = parseInt((_thumbnailButton$getA = thumbnailButton.getAttribute("data-slide-index")) != null ? _thumbnailButton$getA : "");
+    context.goto(index);
+  }
+  /**
+   * Uses an index number to target a specific thumbnailButton element and then updates the thumbnail navigation marker with that element
+   * @param index number
+   * @param context ICarousel
+   */
+
+
+  static updateThumbnailNavigationMarkerByIndex(index, context) {
+    if (!context.container) return;
+    var hasThumbnailButtons = Carousel.thumbnails.has(context.container);
+
+    if (hasThumbnailButtons) {
+      var thumbnailButtons = Carousel.thumbnails.get(context.container);
+      var currentButton = thumbnailButtons == null ? void 0 : thumbnailButtons.find(thumbnailButton => {
+        var _thumbnailButton$getA2;
+
+        return parseInt((_thumbnailButton$getA2 = thumbnailButton.getAttribute("data-slide-index")) != null ? _thumbnailButton$getA2 : "") === index;
+      });
+      if (!currentButton || !thumbnailButtons) return;
+      Carousel.updateThumbnailNavigationMarker(currentButton, thumbnailButtons);
+    }
+  }
+  /**
+   * Enables the carousel to activate thumbnail controls through user-interface components
+   */
+
+
+  enableThumbnailControls(eventCallback) {
+    if (!this.container) return;
+    var thumbnailButtons = (0,Shared_ts_utils_html__WEBPACK_IMPORTED_MODULE_5__.enumerateElements)(this.container.querySelectorAll(".slide__thumbnail"));
+
+    if (thumbnailButtons.length === 0) {
+      var shadowRoot = this.container.getRootNode();
+
+      if (shadowRoot instanceof ShadowRoot) {
+        thumbnailButtons = (0,Shared_ts_utils_html__WEBPACK_IMPORTED_MODULE_5__.enumerateElements)(shadowRoot.host.querySelectorAll(".slide__thumbnail"));
+      }
+    }
+
+    Carousel.thumbnails.set(this.container, thumbnailButtons);
+    thumbnailButtons.forEach(thumbnailButton => {
+      thumbnailButton.addEventListener("click", event => {
+        var currentButton = event.target;
+        Carousel.updateThumbnailNavigation(currentButton, this);
+        Carousel.updateThumbnailNavigationMarker(currentButton, thumbnailButtons);
+        if (typeof eventCallback === "function") eventCallback(event);
+      });
+    });
+    var context = Carousel.getContext(this.container);
+    if (!context) return;
+    this.on("rotation", currentIndex => {
+      if (currentIndex === undefined) return;
+      Carousel.updateThumbnailNavigationMarkerByIndex(currentIndex, context);
+    });
+  }
+
+}
+Carousel.currentThumbnailCSSClassName = "slide__thumbnail--is-selected";
+Carousel.context = new WeakMap();
+Carousel.events = new WeakMap();
+Carousel.controls = new WeakMap();
+Carousel.thumbnails = new WeakMap();
 
 /***/ }),
 
@@ -3682,6 +4801,38 @@ module.exports = function (it) {
 
 /***/ }),
 
+/***/ "../../Library/node_modules/core-js/internals/number-parse-int.js":
+/*!************************************************************************!*\
+  !*** ../../Library/node_modules/core-js/internals/number-parse-int.js ***!
+  \************************************************************************/
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var global = __webpack_require__(/*! ../internals/global */ "../../Library/node_modules/core-js/internals/global.js");
+var fails = __webpack_require__(/*! ../internals/fails */ "../../Library/node_modules/core-js/internals/fails.js");
+var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "../../Library/node_modules/core-js/internals/function-uncurry-this.js");
+var toString = __webpack_require__(/*! ../internals/to-string */ "../../Library/node_modules/core-js/internals/to-string.js");
+var trim = (__webpack_require__(/*! ../internals/string-trim */ "../../Library/node_modules/core-js/internals/string-trim.js").trim);
+var whitespaces = __webpack_require__(/*! ../internals/whitespaces */ "../../Library/node_modules/core-js/internals/whitespaces.js");
+
+var $parseInt = global.parseInt;
+var Symbol = global.Symbol;
+var ITERATOR = Symbol && Symbol.iterator;
+var hex = /^[+-]?0x/i;
+var exec = uncurryThis(hex.exec);
+var FORCED = $parseInt(whitespaces + '08') !== 8 || $parseInt(whitespaces + '0x16') !== 22
+  // MS Edge 18- broken with boxed symbols
+  || (ITERATOR && !fails(function () { $parseInt(Object(ITERATOR)); }));
+
+// `parseInt` method
+// https://tc39.es/ecma262/#sec-parseint-string-radix
+module.exports = FORCED ? function parseInt(string, radix) {
+  var S = trim(toString(string));
+  return $parseInt(S, (radix >>> 0) || (exec(hex, S) ? 16 : 10));
+} : $parseInt;
+
+
+/***/ }),
+
 /***/ "../../Library/node_modules/core-js/internals/object-create.js":
 /*!*********************************************************************!*\
   !*** ../../Library/node_modules/core-js/internals/object-create.js ***!
@@ -4641,6 +5792,47 @@ module.exports = {
 
 /***/ }),
 
+/***/ "../../Library/node_modules/core-js/internals/string-trim.js":
+/*!*******************************************************************!*\
+  !*** ../../Library/node_modules/core-js/internals/string-trim.js ***!
+  \*******************************************************************/
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "../../Library/node_modules/core-js/internals/function-uncurry-this.js");
+var requireObjectCoercible = __webpack_require__(/*! ../internals/require-object-coercible */ "../../Library/node_modules/core-js/internals/require-object-coercible.js");
+var toString = __webpack_require__(/*! ../internals/to-string */ "../../Library/node_modules/core-js/internals/to-string.js");
+var whitespaces = __webpack_require__(/*! ../internals/whitespaces */ "../../Library/node_modules/core-js/internals/whitespaces.js");
+
+var replace = uncurryThis(''.replace);
+var whitespace = '[' + whitespaces + ']';
+var ltrim = RegExp('^' + whitespace + whitespace + '*');
+var rtrim = RegExp(whitespace + whitespace + '*$');
+
+// `String.prototype.{ trim, trimStart, trimEnd, trimLeft, trimRight }` methods implementation
+var createMethod = function (TYPE) {
+  return function ($this) {
+    var string = toString(requireObjectCoercible($this));
+    if (TYPE & 1) string = replace(string, ltrim, '');
+    if (TYPE & 2) string = replace(string, rtrim, '');
+    return string;
+  };
+};
+
+module.exports = {
+  // `String.prototype.{ trimLeft, trimStart }` methods
+  // https://tc39.es/ecma262/#sec-string.prototype.trimstart
+  start: createMethod(1),
+  // `String.prototype.{ trimRight, trimEnd }` methods
+  // https://tc39.es/ecma262/#sec-string.prototype.trimend
+  end: createMethod(2),
+  // `String.prototype.trim` method
+  // https://tc39.es/ecma262/#sec-string.prototype.trim
+  trim: createMethod(3)
+};
+
+
+/***/ }),
+
 /***/ "../../Library/node_modules/core-js/internals/to-absolute-index.js":
 /*!*************************************************************************!*\
   !*** ../../Library/node_modules/core-js/internals/to-absolute-index.js ***!
@@ -4943,6 +6135,19 @@ module.exports = function (name) {
 
 /***/ }),
 
+/***/ "../../Library/node_modules/core-js/internals/whitespaces.js":
+/*!*******************************************************************!*\
+  !*** ../../Library/node_modules/core-js/internals/whitespaces.js ***!
+  \*******************************************************************/
+/***/ (function(module) {
+
+// a string of all valid unicode whitespaces
+module.exports = '\u0009\u000A\u000B\u000C\u000D\u0020\u00A0\u1680\u2000\u2001\u2002' +
+  '\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF';
+
+
+/***/ }),
+
 /***/ "../../Library/node_modules/core-js/modules/es.array.iterator.js":
 /*!***********************************************************************!*\
   !*** ../../Library/node_modules/core-js/modules/es.array.iterator.js ***!
@@ -5041,6 +6246,24 @@ $({ target: 'Array', proto: true, forced: !STRICT_METHOD || CHROME_BUG }, {
     var length = arguments.length;
     return $reduce(this, callbackfn, length, length > 1 ? arguments[1] : undefined);
   }
+});
+
+
+/***/ }),
+
+/***/ "../../Library/node_modules/core-js/modules/es.parse-int.js":
+/*!******************************************************************!*\
+  !*** ../../Library/node_modules/core-js/modules/es.parse-int.js ***!
+  \******************************************************************/
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+var $ = __webpack_require__(/*! ../internals/export */ "../../Library/node_modules/core-js/internals/export.js");
+var $parseInt = __webpack_require__(/*! ../internals/number-parse-int */ "../../Library/node_modules/core-js/internals/number-parse-int.js");
+
+// `parseInt` method
+// https://tc39.es/ecma262/#sec-parseint-string-radix
+$({ global: true, forced: parseInt != $parseInt }, {
+  parseInt: $parseInt
 });
 
 
@@ -5521,6 +6744,9 @@ var __webpack_exports__ = {};
   !*** ./js/app.ts ***!
   \*******************/
 /* harmony import */ var Shared_ts_applications_navigation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! Shared/ts/applications/navigation */ "../../Library/Shared/ts/applications/navigation.ts");
+/* harmony import */ var Shared_ts_components_carousel__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! Shared/ts/components/carousel */ "../../Library/Shared/ts/components/carousel.ts");
+/* harmony import */ var Shared_ts_api_carousel_slide_adapters_slide_carousel__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! Shared/ts/api/carousel/slide/adapters/slide-carousel */ "../../Library/Shared/ts/api/carousel/slide/adapters/slide-carousel.ts");
+/* harmony import */ var Shared_ts_observers_intersection__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! Shared/ts/observers/intersection */ "../../Library/Shared/ts/observers/intersection.ts");
 
 var initializeNavUI = function () {
     var nav = (0,Shared_ts_applications_navigation__WEBPACK_IMPORTED_MODULE_0__.initializeNavById)("nav");
@@ -5529,6 +6755,16 @@ var initializeNavUI = function () {
     (0,Shared_ts_applications_navigation__WEBPACK_IMPORTED_MODULE_0__.importScrollableHeightByElement)(nav.root);
 };
 initializeNavUI();
+console.log("hello"); // components
+ // adapters
+ // observers
+
+(0,Shared_ts_observers_intersection__WEBPACK_IMPORTED_MODULE_3__.observer)(".slide--carousel", {
+    inRange: function (element) {
+        var carousel = new Shared_ts_components_carousel__WEBPACK_IMPORTED_MODULE_1__["default"](new Shared_ts_api_carousel_slide_adapters_slide_carousel__WEBPACK_IMPORTED_MODULE_2__["default"](element));
+        carousel.enablePrevNextControls();
+    }
+});
 
 }();
 /******/ })()

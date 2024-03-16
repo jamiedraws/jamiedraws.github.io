@@ -19,6 +19,13 @@ $scroll-offset: 2em !default;
     margin-top: var(--text-flow-separate-margin, 1rem);
 }
 
+%separate-block-flow-elements {
+    @include space.between-flow-elements(
+        $gap: var(--text-flow-separate-margin, 1rem)
+    ) {
+    }
+}
+
 %heading-rules {
     font-size: clamp(fonts.rem(35), 5vw, fonts.rem(50));
     line-height: 1.1;

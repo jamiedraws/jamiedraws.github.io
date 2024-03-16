@@ -1,4 +1,9 @@
+@charset "UTF-8";
 h1 + p {
+  margin-top: var(--text-flow-separate-margin, 1rem);
+}
+
+.review__text > * + *, .review blockquote > * + * {
   margin-top: var(--text-flow-separate-margin, 1rem);
 }
 
@@ -149,6 +154,23 @@ html {
   bottom: 0;
   opacity: 0;
   z-index: -1;
+}
+
+.icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  stroke: currentColor;
+  fill: none;
+  pointer-events: none;
+  fill-rule: evenodd;
+  clip-rule: evenodd;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-miterlimit: 3;
+}
+.icon--symbol {
+  display: none;
 }
 
 .link {
@@ -1286,28 +1308,24 @@ body [tabindex="0"]:focus {
   }
 }
 .footer {
-  --section-frame: 1rem;
-  overflow: hidden;
-  text-align: center;
-  background: var(--color-first);
-  color: white;
-  background: var(--color-first-grad);
-  position: relative;
-  z-index: 1;
+  flex-basis: clamp(var(--media-text-min-height, 30rem), var(--media-text-range-height, 50vmax), var(--media-text-max-height, 35rem));
+  background: var(--main-text-color);
+  color: var(--main-background-color);
 }
 .footer::selection,
 .footer ::selection {
-  background: white;
-  color: var(--color-first);
+  background: var(--main-background-color);
+  color: var(--main-text-color);
 }
 .footer a:focus,
 .footer button:focus,
 .footer [tabindex="0"]:focus {
-  outline-color: white;
+  outline-color: var(--main-background-color);
 }
 .footer nav {
   margin-left: 0;
   list-style: none;
+  margin-top: 2rem;
 }
 .footer nav > * {
   break-inside: avoid;
@@ -1321,31 +1339,12 @@ body [tabindex="0"]:focus {
 .footer nav > *:not(:last-child) {
   margin-bottom: 1rem;
 }
-@media all and (max-width: 40rem) {
-  .footer nav {
-    column-width: 12em;
-    column-rule: 1px solid;
-    list-style: none;
-    margin: 0 -2em;
-    overflow: hidden;
-  }
-  .footer nav > * {
-    break-inside: avoid;
-    margin: 0 2em;
-  }
-  .footer nav > * {
-    display: block;
-    text-align: left;
-  }
+.footer nav > * {
+  display: inline-block;
 }
-@media all and (min-width: 40rem) {
-  .footer nav > * {
-    display: inline-block;
-  }
-  .footer nav > *:not(:last-child)::after {
-    content: "|";
-    margin: 0 1rem;
-  }
+.footer nav > *:not(:last-child)::after {
+  content: "|";
+  margin: 0 1rem;
 }
 .footer a {
   text-align: left;
@@ -1361,12 +1360,6 @@ body [tabindex="0"]:focus {
 }
 .footer button:not(:hover):not(:focus) {
   text-decoration: none;
-}
-@media all and (max-width: calc(31.25rem + (-0.1rem * 2))) {
-  .footer address {
-    max-width: 35ch;
-    margin-inline: auto;
-  }
 }
 
 .dtm__in .button {
@@ -1588,6 +1581,7 @@ body [tabindex="0"]:focus {
 .ui-icon {
   font-size: var(--ui-icon-scale-size, 2em);
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
 }
 .ui-icon > svg {
@@ -2011,6 +2005,7 @@ body [tabindex="0"]:focus {
   justify-content: center;
   --group-align-items: center;
   --group-justify-content: space-evenly;
+  container: header-text-group/inline-size;
 }
 .header-text-group__group {
   display: flex;
@@ -2037,10 +2032,11 @@ body [tabindex="0"]:focus {
   }
 }
 .header-text-group__header {
-  text-align: right;
+  text-align: var(--header-text-group-header-align, right);
 }
 .header-text-group__text {
   flex-basis: 37ch;
+  text-align: var(--header-text-group-text-align, left);
 }
 .header-text-group__text > * + * {
   margin-top: 2rem;
@@ -2049,21 +2045,33 @@ body [tabindex="0"]:focus {
   --base-number: 3.75;
   --base-font-size: calc(var(--base-number, 1) * 1em);
   font-size: var(--base-font-size);
+  font-size: clamp(2.5em, 6vw, var(--base-font-size));
   line-height: 1;
 }
 .header-text-group__title > span {
   display: block;
   font-size: calc(1.875em / var(--base-number, 1));
 }
+@container (inline-size < 56.25rem) {
+  .header-text-group__group {
+    --header-text-group-header-align: left;
+    --header-text-group-text-align: left;
+    max-width: 50ch;
+    margin-inline: auto;
+  }
+  .header-text-group__text {
+    flex-basis: 100%;
+  }
+}
 
 .header-text-group--reverse-order .header-text-group__group {
   flex-direction: row-reverse;
 }
 .header-text-group--reverse-order .header-text-group__header {
-  text-align: left;
+  text-align: var(--header-text-group-header-align, left);
 }
 .header-text-group--reverse-order .header-text-group__text {
-  text-align: right;
+  text-align: var(--header-text-group-text-align, right);
 }
 
 .block-header-text__text {
@@ -2396,13 +2404,13 @@ body [tabindex="0"]:focus {
 }
 
 .slide {
-  --carousel-button-color-background: white;
+  --carousel-button-color-background: var(--main-background-color);
   --carousel-button-color-background-active: var(
       --carousel-button-color-background
   );
   --carousel-button-color-active: var(--main-text-color);
   --carousel-button-color-inactive: var(--main-text-color);
-  --carousel-length: 100%;
+  --carousel-length: var(--carousel-length-inherit, 100%);
   --carousel-slide-length: calc(
       var(--carousel-slide-item-length) *
           var(--carousel-view-item-quantity)
@@ -2431,6 +2439,7 @@ body [tabindex="0"]:focus {
   position: relative;
 }
 .slide__item {
+  align-self: stretch;
   align-items: stretch;
   justify-content: center;
   max-width: calc(100% / var(--carousel-view-item-quantity));
@@ -2454,7 +2463,6 @@ body [tabindex="0"]:focus {
 .slide__nav button > svg {
   fill: currentColor;
   stroke-width: 0.5px;
-  transform: rotate(0.25turn);
 }
 @media all and (max-width: 0) {
   .slide__nav {
@@ -2535,6 +2543,48 @@ body [tabindex="0"]:focus {
 }
 .accordion__button[aria-expanded=true] > .accordion__icon::before {
   transform: rotateZ(0turn);
+}
+
+.review {
+  --carousel-slide-item-length: 45em;
+  flex-basis: clamp(var(--media-text-min-height, 35rem), var(--media-text-range-height, 60vmax), var(--media-text-max-height, 70rem));
+  padding-block: 6rem;
+}
+.review__container {
+  text-align: center;
+  padding-block: 6rem;
+}
+.review__item {
+  background: var(--color-second);
+  color: var(--color-first);
+  display: flex;
+  align-items: center;
+  padding: 2rem;
+}
+.review__item::selection,
+.review__item ::selection {
+  background: var(--color-first);
+  color: var(--color-second);
+}
+.review__item a:focus,
+.review__item button:focus,
+.review__item [tabindex="0"]:focus {
+  outline-color: var(--color-first);
+}
+.review__text {
+  text-align: center;
+}
+.review__name {
+  display: block;
+}
+.review blockquote {
+  position: relative;
+}
+.review blockquote:has(p) p:first-child::before {
+  content: "“";
+}
+.review blockquote:has(p) p:last-child::after {
+  content: "”";
 }
 
 /*# sourceMappingURL=style.css.map */

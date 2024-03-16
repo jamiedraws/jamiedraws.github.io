@@ -20,6 +20,7 @@
 @use "./../layouts/cover-image-text";
 @use "./../layouts/accordion";
 @use "./../layouts/slide";
+@use "./../layouts/review";
 
 @mixin base {
     // utils
@@ -63,6 +64,7 @@
     @include slide.base;
     @include slide.responsive;
     @include accordion.base;
+    @include review.base;
 
     @content;
 }

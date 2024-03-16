@@ -1,0 +1,75 @@
+$select: ".review" !default;
+
+// config
+@use "./../config/queries";
+@use "./../config/fonts";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/space";
+@use "Shared/scss/templates/base/abstracts/group";
+@use "Shared/scss/templates/base/abstracts/background";
+
+@mixin base {
+    #{$select} {
+        --carousel-slide-item-length: 45em;
+
+        flex-basis: clamp(
+            var(--media-text-min-height, 35rem),
+            var(--media-text-range-height, 60vmax),
+            var(--media-text-max-height, 70rem)
+        );
+
+        padding-block: 6rem;
+
+        &__container {
+            text-align: center;
+
+            padding-block: 6rem;
+        }
+
+        &__item {
+            @include background.color-map(
+                $background-color: var(--color-second),
+                $text-color: var(--color-first)
+            ) {
+                display: flex;
+                align-items: center;
+                padding: 2rem;
+            }
+        }
+
+        &__text {
+            @extend %separate-block-flow-elements;
+
+            text-align: center;
+        }
+
+        &__name {
+            display: block;
+        }
+
+        blockquote {
+            position: relative;
+
+            @extend %separate-block-flow-elements;
+
+            &:has(p) {
+                p {
+                    &:first-child::before,
+                    &:last-child::after {
+                    }
+
+                    &:first-child::before {
+                        content: "\201C";
+                    }
+
+                    &:last-child::after {
+                        content: "\201D";
+                    }
+                }
+            }
+        }
+
+        @content;
+    }
+}

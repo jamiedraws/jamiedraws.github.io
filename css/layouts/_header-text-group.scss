@@ -23,17 +23,21 @@ $select: ".header-text-group" !default;
         --group-align-items: center;
         --group-justify-content: space-evenly;
 
+        container: header-text-group/inline-size;
+
         &__group {
             @include group.contain-flex($gap: 3rem) {
             }
         }
 
         &__header {
-            text-align: right;
+            text-align: var(--header-text-group-header-align, right);
         }
 
         &__text {
             flex-basis: 37ch;
+
+            text-align: var(--header-text-group-text-align, left);
 
             @include space.between-flow-elements($gap: 2rem) {
             }
@@ -41,11 +45,26 @@ $select: ".header-text-group" !default;
 
         &__title {
             @include fonts.base-em(60);
+            font-size: clamp(2.5em, 6vw, var(--base-font-size));
             line-height: 1;
 
             > span {
                 display: block;
                 font-size: fonts.cascade-em(30);
+            }
+        }
+
+        @container (inline-size < #{queries.rem(900)}) {
+            &__group {
+                --header-text-group-header-align: left;
+                --header-text-group-text-align: left;
+
+                max-width: 50ch;
+                margin-inline: auto;
+            }
+
+            &__text {
+                flex-basis: 100%;
             }
         }
 
@@ -62,11 +81,11 @@ $select: ".header-text-group" !default;
                 }
 
                 &__header {
-                    text-align: left;
+                    text-align: var(--header-text-group-header-align, left);
                 }
 
                 &__text {
-                    text-align: right;
+                    text-align: var(--header-text-group-text-align, right);
                 }
             }
 

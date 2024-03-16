@@ -5,6 +5,7 @@ $select: ".ui-icon" !default;
         font-size: var(--ui-icon-scale-size, 2em);
 
         display: flex;
+        flex-wrap: wrap;
         align-items: center;
 
         > svg {
@@ -14,5 +15,16 @@ $select: ".ui-icon" !default;
         }
 
         @content;
+    }
+}
+
+@mixin can-wrap {
+    #{$select} {
+        &--can-wrap {
+            #{$select} {
+            }
+
+            @content;
+        }
     }
 }

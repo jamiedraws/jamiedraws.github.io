@@ -14,7 +14,7 @@ $select: ".slide" !default;
     @include slide.base;
 
     #{$select} {
-        --carousel-button-color-background: white;
+        --carousel-button-color-background: var(--main-background-color);
         --carousel-button-color-background-active: var(
             --carousel-button-color-background
         );
@@ -22,7 +22,7 @@ $select: ".slide" !default;
         --carousel-button-color-active: var(--main-text-color);
         --carousel-button-color-inactive: var(--main-text-color);
 
-        --carousel-length: 100%;
+        --carousel-length: var(--carousel-length-inherit, 100%);
         --carousel-slide-length: calc(
             var(--carousel-slide-item-length) *
                 var(--carousel-view-item-quantity)
@@ -59,6 +59,7 @@ $select: ".slide" !default;
         }
 
         &__item {
+            align-self: stretch;
             align-items: stretch;
             justify-content: center;
 
@@ -92,7 +93,7 @@ $select: ".slide" !default;
                 > svg {
                     fill: currentColor;
                     stroke-width: 0.5px;
-                    transform: rotate(0.25turn);
+                    // transform: rotate(0.25turn);
                 }
             }
         }
