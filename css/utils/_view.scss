@@ -22,6 +22,11 @@ $scroll-offset: 2em !default;
     @include view.zero-anchor-position("[data-viewport]");
 
     #{$select} {
+        &__anchor {
+            width: 1px;
+            height: 1px;
+        }
+
         &__scroll {
             top: 0;
         }

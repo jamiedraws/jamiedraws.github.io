@@ -102,6 +102,10 @@ legend, h3 {
   top: 0;
 }
 
+.view__anchor {
+  width: 1px;
+  height: 1px;
+}
 .view__scroll {
   top: 0;
 }
