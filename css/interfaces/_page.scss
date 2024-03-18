@@ -21,6 +21,7 @@
 @use "./../layouts/accordion";
 @use "./../layouts/slide";
 @use "./../layouts/review";
+@use "./../layouts/document";
 
 @mixin base {
     // utils
@@ -32,6 +33,9 @@
     }
 
     @include list.base;
+
+    // layouts
+    @include document.images;
 
     @content;
 }

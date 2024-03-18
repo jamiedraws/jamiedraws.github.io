@@ -19,6 +19,10 @@ $select: ".contain" !default;
             background: var(--main-text-color);
         }
 
+        &--media-text {
+            @include contain.ratio($ratio: math.div(600, 450));
+        }
+
         @content;
     }
 }

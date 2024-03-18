@@ -14,6 +14,7 @@ $scroll-offset: 2em !default;
 // abstracts
 @use "Shared/scss/templates/base/abstracts/background";
 @use "Shared/scss/templates/base/abstracts/space";
+@use "./../abstracts/graphics";
 
 %separate-flow-elements {
     margin-top: var(--text-flow-separate-margin, 1rem);
@@ -101,7 +102,8 @@ $scroll-offset: 2em !default;
 
 @mixin body {
     body {
-        font: fonts.rem(20) var(--main-font-body);
+        @include fonts.base-rem(20);
+        font-family: var(--main-font-body);
         line-height: 1.45;
         color: var(--main-text-color);
 
@@ -112,5 +114,8 @@ $scroll-offset: 2em !default;
     }
 }
 
-@mixin graphics {
+@mixin images {
+    img[src$=".jpg"] {
+        background: var(--main-text-color);
+    }
 }

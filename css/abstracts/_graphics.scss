@@ -1,0 +1,13 @@
+// config
+@use "./../config/queries";
+
+@mixin set-responsive-img($width: 0, $max-width: $width) {
+    img[width="#{$width}"] {
+        max-width: queries.cascade-em($max-width);
+
+        @content;
+    }
+}
+
+@mixin responsive-images {
+}
