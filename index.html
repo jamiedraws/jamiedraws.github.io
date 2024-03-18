@@ -7,6 +7,14 @@
             content="width=device-width, initial-scale=1.0" />
         <title>Jamie Wayne Guijarro | Portfolio</title>
 
+        <meta
+            name="description"
+            content="Explore Jamie Wayne Guijarro's impressive portfolio showcasing expertise in front-end development. Discover innovative web designs, responsive layouts, and interactive user experiences." />
+
+        <meta
+            name="keywords"
+            content="Jamie Wayne Guijarro, front-end developer, senior developer, web developer, portfolio, website portfolio, web design, responsive design, user experience, UX/UI design" />
+
         <!-- Google tag (gtag.js) -->
         <script
             async
@@ -41,10 +49,10 @@
 
         <link
             rel="stylesheet"
-            href="./css/style.css" />
+            href="/css/style.css" />
         <script
             defer
-            src="./js/app.js"></script>
+            src="/js/app.js"></script>
 
         <link
             rel="apple-touch-icon"
@@ -94,7 +102,7 @@
                     href="#"
                     class="nav__logo">
                     <img
-                        src="./images/jamie-wayne-logo.svg"
+                        src="/images/jamie-wayne-logo.svg"
                         alt="Jamie Wayne"
                         width="300"
                         height="141" />
@@ -116,7 +124,7 @@
                                 href="#"
                                 class="nav__logo">
                                 <img
-                                    src="./images/jamie-wayne-logo.svg"
+                                    src="/images/jamie-wayne-logo.svg"
                                     alt="Jamie Wayne"
                                     width="300"
                                     height="141" />
@@ -165,10 +173,27 @@
                 <div class="main__container main__group">
                     <picture class="main__picture">
                         <source
-                            srcset="./images/profile-pic-800x800.webp"
-                            type="image/webp" />
+                            srcset="/images/profile-pic-200x200.webp"
+                            type="image/webp"
+                            media="(max-width: 467px)" />
+                        <source
+                            srcset="/images/profile-pic-400x400.webp"
+                            type="image/webp"
+                            media="(max-width: 767px)" />
+                        <source
+                            srcset="/images/profile-pic-800x800.webp"
+                            type="image/webp"
+                            media="(min-width: 768px)" />
+                        <source
+                            srcset="/images/profile-pic-200x200.jpg"
+                            type="image/jpeg"
+                            media="(max-width: 467px)" />
+                        <source
+                            srcset="/images/profile-pic-400x400.jpg"
+                            type="image/jpeg"
+                            media="(max-width: 767px)" />
                         <img
-                            src="./images/profile-pic-800x800.jpg"
+                            src="/images/profile-pic-800x800.jpg"
                             alt="Headshot"
                             width="400"
                             height="400" />
@@ -283,13 +308,23 @@
                         </div>
                         <picture class="media-text__picture">
                             <source
+                                srcset="/images/laptop-view-400w.webp"
+                                type="image/webp"
+                                media="(max-width: 467px)" />
+                            <source
                                 srcset="/images/laptop-view.webp"
-                                type="image/webp" />
+                                type="image/webp"
+                                media="(min-width: 468px)" />
+                            <source
+                                srcset="/images/laptop-view-400w.jpg"
+                                type="image/jpeg"
+                                media="(min-width: 468px)" />
                             <img
                                 src="/images/laptop-view.jpg"
                                 width="960"
                                 height="720"
                                 alt="A laptop showing a file of code in a program"
+                                media="(min-width: 468px)"
                                 loading="lazy" />
                         </picture>
                     </div>
@@ -326,15 +361,29 @@
                         <picture class="media-text__picture">
                             <source
                                 srcset="
+                                    /images/purdue-university-group-pic-400w.webp
+                                "
+                                type="image/webp"
+                                media="(max-width: 467px)" />
+                            <source
+                                srcset="
                                     /images/purdue-university-group-pic.webp
                                 "
-                                type="image/webp" />
+                                type="image/webp"
+                                media="(min-width: 468px)" />
+                            <source
+                                srcset="
+                                    /images/purdue-university-group-pic-400w.jpg
+                                "
+                                type="image/jpeg"
+                                media="(max-width: 467px)" />
                             <img
                                 src="/images/purdue-university-group-pic.jpg"
                                 alt="Purdue University Marketing Association at a marketing seminar"
                                 loading="lazy"
                                 width="960"
-                                height="717" />
+                                height="717"
+                                media="(min-width: 468px)" />
                         </picture>
                     </div>
                 </div>
@@ -371,14 +420,28 @@
                         </div>
                         <picture class="media-text__picture">
                             <source
+                                srcset="
+                                    /images/insight-design-conference-400w.webp
+                                "
+                                type="image/webp"
+                                media="(max-width: 467px)" />
+                            <source
                                 srcset="/images/insight-design-conference.webp"
-                                type="image/webp" />
+                                type="image/webp"
+                                media="(min-width: 468px)" />
+                            <source
+                                srcset="
+                                    /images/insight-design-conference-400w.jpg
+                                "
+                                type="image/jpeg"
+                                media="(max-width: 467px)" />
                             <img
                                 src="/images/insight-design-conference.jpg"
                                 alt="Jamie Wayne giving a presentation at the INsight Design Conference"
                                 loading="lazy"
                                 width="960"
-                                height="720" />
+                                height="720"
+                                media="(min-width: 468px)" />
                         </picture>
                     </div>
                 </div>
